@@ -1,8 +1,10 @@
 #include "ofApp.h"
 
-bool rendererInited = false;
+
 
 void ofApp::setup(){
+
+    arguments = ofxArgParser::allKeys();
 	ofSetLogLevel(OF_LOG_WARNING);
 	ofSetVerticalSync(false);
 
@@ -18,9 +20,27 @@ void ofApp::setup(){
 	calibration.enableChessboardMouseControl();
 
 	rendererInited = false;
+
     maskPoints=0;
 
-    //mask.allocate(WIN_WIDTH,WIN_HEIGHT);
+    //Parse Args
+    for (int i = 0; i < arguments.size(); i++)
+    {
+        if(arguments[i]=="calib")
+        {
+            doCalib = ofToInt(ofxArgParser::getValue(arguments[i]));
+
+        }
+    }
+
+    //Decide if to use the existing calibration and bypass the calibration step
+    if(doCalib==0)
+    {
+        calibration.update();
+        calibration.finalize();
+    }
+
+
 }
 
 void ofApp::update(){
@@ -62,10 +82,10 @@ void ofApp::draw(){
 	}
 
 	if(calibration.isFinalized() && rendererInited) {
-		renderer.drawHueDepthImage();
+		//renderer.drawHueDepthImage();
 
 
-        //renderer.drawImage(depthcam.getPixels(),depthcam.width,depthcam.height);
+        renderer.drawImage(depthcam.getPixels(),depthcam.width,depthcam.height);
 
 
 	}
@@ -76,6 +96,9 @@ void ofApp::keyPressed(int key){
 
 void ofApp::mousePressed(int x, int y, int button){
 
+    if(!calibration.isFinalized()) {
+
+
     cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
 
     if(maskPoints>=4)
@@ -83,6 +106,7 @@ void ofApp::mousePressed(int x, int y, int button){
 
     kinectMask[maskPoints]=ofPoint(x,y);
     maskPoints++;
+    }
 
 }
 

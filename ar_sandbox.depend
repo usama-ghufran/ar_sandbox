@@ -2211,15 +2211,17 @@
 
 1410237194 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\icon.rc
 
-1442537958 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\main.cpp
+1442652335 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\main.cpp
 	"ofApp.h"
 	"ofAppGLFWWindow.h"
+	"ofxArgParser.h"
 
-1442588815 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
+1442659686 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
 	"ofxOpenCV.h"
+	"ofxArgParser.h"
 	"opencv2/opencv.hpp"
 
 1388882358 f:\devtools\openframeworks_codeblocks\addons\ofxreprojection\src\ofxreprojection.h
@@ -2251,7 +2253,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1442588815 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
+1442659451 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
 
 1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxopencv\libs\opencv\include\opencv2\opencv.hpp
@@ -2299,4 +2301,134 @@
 1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxopencv\libs\opencv\include\opencv2\contrib\retina.hpp
 	"opencv2/core/core.hpp"
 	<valarray>
+
+1341828986 f:\devtools\openframeworks_codeblocks\addons\ofxargparser\src\ofxargparser.h
+	"ofMain.h"
+
+1341828986 source:f:\devtools\openframeworks_codeblocks\addons\ofxargparser\src\ofxargparser.cpp
+	"ofxArgParser.h"
+
+1441874351 source:f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\src\ofxartoolkitplus.cpp
+	"ofxARToolkitPlus.h"
+	"ARToolKitPlus/TrackerMultiMarker.h"
+	<limits.h>
+
+1440325217 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\src\ofxartoolkitplus.h
+	"ofMain.h"
+	<ARToolKitPlus/ar.h>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\ar.h
+	<stdlib.h>
+	<ARToolKitPlus/config.h>
+	<stdint.h>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\config.h
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\trackermultimarker.h
+	<ARToolKitPlus/Tracker.h>
+
+1441476597 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\tracker.h
+	<ARToolKitPlus/ARToolKitPlus.h>
+	<ARToolKitPlus/ar.h>
+	<ARToolKitPlus/arMulti.h>
+	<ARToolKitPlus/vector.h>
+	<ARToolKitPlus/Camera.h>
+	<ARToolKitPlus/extra/BCH.h>
+	<ARToolKitPlus/extra/Hull.h>
+	<vector>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\artoolkitplus.h
+	<vector>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\armulti.h
+	<ARToolKitPlus/config.h>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\vector.h
+	<ARToolKitPlus/config.h>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\camera.h
+	<string>
+	<ARToolKitPlus/config.h>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\extra\bch.h
+	<ARToolKitPlus/config.h>
+	<vector>
+
+1392847434 f:\devtools\openframeworks_codeblocks\addons\ofxartoolkitplus\include\artoolkitplus\extra\hull.h
+	<ARToolKitPlus/config.h>
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxbasegui.cpp
+	"ofxBaseGui.h"
+	"ofXml.h"
+	"ofImage.h"
+	"ofBitmapFont.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxbasegui.h
+	"ofConstants.h"
+	"ofBaseTypes.h"
+	"ofParameter.h"
+	"ofTrueTypeFont.h"
+
+1410237190 f:\devtools\openframeworks_codeblocks\libs\openframeworks\graphics\ofbitmapfont.h
+	"ofConstants.h"
+	"ofRectangle.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxbutton.cpp
+	"ofxButton.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxbutton.h
+	"ofxToggle.h"
+	"ofParameter.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxtoggle.h
+	"ofParameter.h"
+	"ofxBaseGui.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxguigroup.cpp
+	"ofxGuiGroup.h"
+	"ofxPanel.h"
+	"ofxSliderGroup.h"
+	"ofGraphics.h"
+	"ofxLabel.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxguigroup.h
+	"ofxBaseGui.h"
+	"ofxSlider.h"
+	"ofxButton.h"
+	"ofParameterGroup.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxslider.h
+	"ofxBaseGui.h"
+	"ofParameter.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxpanel.h
+	"ofxGuiGroup.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxslidergroup.h
+	"ofxGuiGroup.h"
+	"ofxSlider.h"
+
+1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxlabel.h
+	"ofxBaseGui.h"
+	"ofParameter.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxlabel.cpp
+	"ofxLabel.h"
+	"ofGraphics.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxpanel.cpp
+	"ofxPanel.h"
+	"ofGraphics.h"
+	"ofImage.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxslider.cpp
+	"ofxSlider.h"
+	"ofGraphics.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxslidergroup.cpp
+	"ofxSliderGroup.h"
+
+1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxtoggle.cpp
+	"ofxToggle.h"
+	"ofGraphics.h"
 

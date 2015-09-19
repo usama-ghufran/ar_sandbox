@@ -1,4 +1,7 @@
+ofxGui
 ofxKinect
 ofxOpenCv
 ofxXmlSettings
+ofxArgParser
+ofxARtoolkitPlus
 ofxReprojection
