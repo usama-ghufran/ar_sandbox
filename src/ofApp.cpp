@@ -20,8 +20,13 @@ void ofApp::setup(){
 	calibration.enableChessboardMouseControl();
 
 	rendererInited = false;
+	writeMask=true;
 
     maskPoints=0;
+    mask=cv::imread("data/mask.bmp",1);
+
+    if(!mask.data)
+        mask = cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
 
     //Parse Args
     for (int i = 0; i < arguments.size(); i++)
@@ -29,7 +34,6 @@ void ofApp::setup(){
         if(arguments[i]=="calib")
         {
             doCalib = ofToInt(ofxArgParser::getValue(arguments[i]));
-
         }
     }
 
@@ -47,6 +51,16 @@ void ofApp::update(){
 	depthcam.update();
 	if(!calibration.isFinalized()) {
 		calibration.update();
+
+		if(maskPoints==4&&writeMask)
+        {
+            cv::Scalar white(255,255,255);
+            mask = cv::Scalar(0,0,0);
+            cv::fillConvexPoly(mask,kinectMask,4,white);
+            cv::imwrite("data/mask.bmp",mask);
+            writeMask=false;
+        }
+
 	}
 
 	if(calibration.isFinalized() && !rendererInited) {
@@ -72,26 +86,37 @@ void ofApp::draw(){
 		ofSetColor(255,0,0);
         for(int i=0; i<maskPoints; i++)
         {
-            ofCircle(kinectMask[i].x,kinectMask[i].y,3);
-            ofDrawBitmapString(ofToString(i),kinectMask[i].x,kinectMask[i].y);
+            ofCircle(drawkinectMask[i].x,drawkinectMask[i].y,3);
+            ofDrawBitmapString(ofToString(i),drawkinectMask[i].x,drawkinectMask[i].y);
         }
         ofSetColor(255,255,255);
 
 
-        //cv::fillConvexPoly())
+
 	}
 
 	if(calibration.isFinalized() && rendererInited) {
 		//renderer.drawHueDepthImage();
 
 
-        renderer.drawImage(depthcam.getPixels(),depthcam.width,depthcam.height);
+         renderer.drawImage(depthcam.getPixels(),depthcam.width,depthcam.height);
 
 
 	}
 }
 
 void ofApp::keyPressed(int key){
+
+    switch (key)
+    {
+        case OF_KEY_ESC:
+            maskPoints=0;
+        break;
+
+
+    }
+
+
 }
 
 void ofApp::mousePressed(int x, int y, int button){
@@ -99,12 +124,17 @@ void ofApp::mousePressed(int x, int y, int button){
     if(!calibration.isFinalized()) {
 
 
-    cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
+    //cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
 
     if(maskPoints>=4)
+    {
         maskPoints=0;
+        writeMask=true;
+    }
 
-    kinectMask[maskPoints]=ofPoint(x,y);
+
+    kinectMask[maskPoints]=cv::Point(x*2*1920/(WIN_WIDTH),y*2*1080/(WIN_HEIGHT));
+    drawkinectMask[maskPoints]=cv::Point(x,y);
     maskPoints++;
     }
 

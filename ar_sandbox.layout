@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="debug" />
-	<File name="..\..\..\addons\ofxReprojection\src\ofxReprojectionRenderer2D.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<ActiveTarget name="release" />
+	<File name="..\..\..\addons\ofxReprojection\src\ofxReprojectionCalibration.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1319" topLine="33" />
+			<Cursor1 position="29105" topLine="869" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\addons\ofxReprojection\src\ofxReprojectionRenderer2D.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3339" topLine="141" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\addons\ofxARtoolkitPlus\src\ofxARToolkitPlus.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="154" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\ofApp.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="262" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\ofApp.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="598" topLine="0" />
+			<Cursor1 position="237" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\main.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -26,16 +31,6 @@
 			<Cursor1 position="772" topLine="1" />
 		</Cursor>
 	</File>
-	<File name="..\..\..\addons\ofxReprojection\src\ofxReprojectionCalibration.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="29105" topLine="869" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\addons\ofxARtoolkitPlus\src\ofxARToolkitPlus.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="154" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="..\..\..\addons\ofxReprojection\src\ofxReprojectionRenderer2D.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2112" topLine="2" />
@@ -44,6 +39,11 @@
 	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\opencv.hpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src\ofApp.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1935" topLine="36" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

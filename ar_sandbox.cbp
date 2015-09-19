@@ -15,6 +15,7 @@
 				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworks.lib;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-calib 1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />

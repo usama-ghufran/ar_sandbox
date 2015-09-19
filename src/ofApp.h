@@ -33,8 +33,10 @@ public:
 	bool rendererInited;
     int doCalib;
 
-	ofPoint kinectMask[4];
+	cv::Point kinectMask[4];
+	cv::Point drawkinectMask[4];
 	int maskPoints;
 	cv::Mat mask;
+	bool writeMask;
 
 };
