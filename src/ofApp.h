@@ -10,7 +10,7 @@
 #include "ofxOpenCV.h"
 #include "ofxArgParser.h"
 #include "opencv2/opencv.hpp"
-
+#include "Simulation.h"
 
 #define WIN_WIDTH 1920*0.5
 #define WIN_HEIGHT 1080*0.5
@@ -37,6 +37,11 @@ public:
 	cv::Point drawkinectMask[4];
 	int maskPoints;
 	cv::Mat mask;
+	cv::Mat flockImg;
+
 	bool writeMask;
+
+	Simulation sim;
+	Flocking* flockDisplay;
 
 };

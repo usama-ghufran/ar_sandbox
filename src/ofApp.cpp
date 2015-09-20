@@ -24,6 +24,7 @@ void ofApp::setup(){
 
     maskPoints=0;
     mask=cv::imread("data/mask.bmp",1);
+    flockImg=cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
 
     if(!mask.data)
         mask = cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
@@ -44,35 +45,87 @@ void ofApp::setup(){
         calibration.finalize();
     }
 
+    /*
+    sim.init(
+                mfishCount 			,
+                mdestWeight 		,
+                mrandSeed 			,
+                msleepTime			,
+                mboundaryPadding 	,
+                mmaxSpeed 			,
+                mmaxForce 			,
+                mflockSepWeight 	,
+                mflockAliWeight 	,
+                mflockCohWeight 	,
+                mcollisionWeight 	,
+                mflockSepRadius 	,
+                mflockAliRadius 	,
+                mflockCohRadius		,
+                mstartPosRad		,
+                mendPosRad
+		);
+		*/
+		sim.loadScene(30,30,600,300,640,360);
+		sim.init(
+                100 			,
+                0.01 		,
+                0 			,
+                0.02			,
+                10 	,
+                2			,
+                1 			,
+                1 	,
+                0.5 	,
+                0.25 	,
+                0 	,
+                15 	,
+                20 	,
+                20		,
+                50		,
+                50
+		);
+
+        flockDisplay = sim.getFlockHandle();
+
 
 }
 
 void ofApp::update(){
+
 	depthcam.update();
+	cv::Scalar white(255,255,255);
+
 	if(!calibration.isFinalized()) {
 		calibration.update();
 
 		if(maskPoints==4&&writeMask)
         {
-            cv::Scalar white(255,255,255);
+
             mask = cv::Scalar(0,0,0);
             cv::fillConvexPoly(mask,kinectMask,4,white);
             cv::imwrite("data/mask.bmp",mask);
             writeMask=false;
         }
-
 	}
 
 	if(calibration.isFinalized() && !rendererInited) {
 		renderer.init(&depthcam);
 		renderer.setDrawArea(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
 		renderer.setProjectionMatrix(dataset.getMatrix());
-
 		rendererInited = true;
 	}
 
 	if(calibration.isFinalized() && rendererInited) {
-		renderer.update();
+
+        sim.frame();
+
+        vector<Boid>* boids = flockDisplay->getBoidsHandle();
+        for(int i=0;i<boids->size();i++)
+        {
+            cv::circle(flockImg,cv::Point((*boids)[i].loc.x,(*boids)[i].loc.y),5,white);
+        }
+
+		//renderer.update();
 
 	}
 }
@@ -81,6 +134,7 @@ void ofApp::draw(){
 	if(!calibration.isFinalized()) {
 		calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT);
 		calibration.drawChessboard(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
+
 
 		//Draw Mask Points;
 		ofSetColor(255,0,0);
@@ -99,7 +153,14 @@ void ofApp::draw(){
 		//renderer.drawHueDepthImage();
 
 
-         renderer.drawImage(depthcam.getPixels(),depthcam.width,depthcam.height);
+        vector<Boid>* boids = flockDisplay->getBoidsHandle();
+        ofSetColor(0,0,255);
+        for(int i=0;i<boids->size();i++)
+        {
+            ofCircle((*boids)[i].loc.x,(*boids)[i].loc.y,2);
+        }
+
+        renderer.drawImage(flockImg.data,1920,1080);
 
 
 	}
