@@ -21,10 +21,11 @@ void ofApp::setup(){
 
 	rendererInited = false;
 	writeMask=true;
-
+    mapRez=1;
     maskPoints=0;
     mask=cv::imread("data/mask.bmp",1);
     flockImg=cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
+    flockingImgOF.allocate(1920,1080,OF_IMAGE_COLOR);
 
     if(!mask.data)
         mask = cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
@@ -65,7 +66,7 @@ void ofApp::setup(){
                 mendPosRad
 		);
 		*/
-		sim.loadScene(30,30,600,300,640,360);
+		sim.loadScene(30,30,600,300,1920/mapRez,1080/mapRez);
 		sim.init(
                 100 			,
                 0.01 		,
@@ -94,14 +95,14 @@ void ofApp::update(){
 
 	depthcam.update();
 	cv::Scalar white(255,255,255);
-
+    cv::Scalar black(0,0,0);
 	if(!calibration.isFinalized()) {
 		calibration.update();
 
 		if(maskPoints==4&&writeMask)
         {
 
-            mask = cv::Scalar(0,0,0);
+            mask = black;
             cv::fillConvexPoly(mask,kinectMask,4,white);
             cv::imwrite("data/mask.bmp",mask);
             writeMask=false;
@@ -117,15 +118,18 @@ void ofApp::update(){
 
 	if(calibration.isFinalized() && rendererInited) {
 
+        //renderer.update();
         sim.frame();
-
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
+        flockImg=black;
         for(int i=0;i<boids->size();i++)
         {
-            cv::circle(flockImg,cv::Point((*boids)[i].loc.x,(*boids)[i].loc.y),5,white);
+            float x = (*boids)[i].loc.x*mapRez;
+            float y = (*boids)[i].loc.y*mapRez;
+            cv::circle(flockImg,cv::Point(x,y),3,white,-1);
         }
-
-		//renderer.update();
+        ofxCv::toOf(flockImg,flockingImgOF);
+		flockingImgOF.update();
 
 	}
 }
@@ -134,7 +138,6 @@ void ofApp::draw(){
 	if(!calibration.isFinalized()) {
 		calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT);
 		calibration.drawChessboard(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
-
 
 		//Draw Mask Points;
 		ofSetColor(255,0,0);
@@ -145,24 +148,21 @@ void ofApp::draw(){
         }
         ofSetColor(255,255,255);
 
-
-
 	}
 
 	if(calibration.isFinalized() && rendererInited) {
 		//renderer.drawHueDepthImage();
-
-
+        /*
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
         ofSetColor(0,0,255);
         for(int i=0;i<boids->size();i++)
         {
-            ofCircle((*boids)[i].loc.x,(*boids)[i].loc.y,2);
+            ofCircle((*boids)[i].loc.x*mapRez,(*boids)[i].loc.y*mapRez,2);
         }
-
-        renderer.drawImage(flockImg.data,1920,1080);
-
-
+        ofSetColor(0,0,255);
+        */
+        //renderer.drawImage(flockingImgOF);
+        flockingImgOF.draw(0,0);
 	}
 }
 

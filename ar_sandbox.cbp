@@ -6,7 +6,7 @@
 		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="addons\;src\;addons\ofxReprojection\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\core\;addons\ofxGui\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\flann\;addons\ofxOpenCv\src\;addons\ofxKinect\src\extra\;addons\ofxOpenCv\libs\opencv\include\opencv\;addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d\;addons\ofxKinect\libs\libfreenect\platform\windows\;addons\ofxKinect\libs\libfreenect\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\video\;addons\ofxOpenCv\libs\opencv\include\opencv2\contrib\;addons\ofxXmlSettings\libs\;addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc\;addons\ofxKinect\libs\libfreenect\platform\windows\libusb10emu\libusb-1.0\;addons\ofxKinect\libs\libusb-1.0\include\libusb-1.0\;addons\ofxARtoolkitPlus\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\gpu\;addons\ofxXmlSettings\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\legacy\;addons\ofxOpenCv\libs\opencv\include\opencv2\;addons\ofxArgParser\src\;addons\ofxKinect\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\highgui\;addons\ofxKinect\libs\libfreenect\include\;addons\ofxKinect\libs\libusb-win32\include\;addons\ofxOpenCv\libs\opencv\include\opencv2\ts\;addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect\;addons\ofxOpenCv\libs\opencv\include\opencv2\features2d\;addons\ofxOpenCv\libs\opencv\include\opencv2\ml\;" />
+		<Option virtualFolders="addons\;src\;addons\ofxReprojection\src\;addons\ofxOpenCv\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\highgui\;addons\ofxKinect\libs\libfreenect\platform\windows\libusb10emu\libusb-1.0\;addons\ofxOpenCv\libs\opencv\include\opencv2\flann\;addons\ofxCv\libs\ofxCv\src\;addons\ofxCv\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc\;addons\ofxKinect\libs\libfreenect\platform\windows\;addons\ofxCv\libs\ofxCv\include\ofxCv\;addons\ofxOpenCv\libs\opencv\include\opencv2\legacy\;addons\ofxKinect\libs\libfreenect\src\;addons\ofxGui\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\core\;addons\ofxKinect\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\video\;addons\ofxOpenCv\libs\opencv\include\opencv2\gpu\;addons\ofxOpenCv\libs\opencv\include\opencv2\ts\;addons\ofxArgParser\src\;addons\ofxCv\libs\CLD\include\CLD\;addons\ofxOpenCv\libs\opencv\include\opencv2\contrib\;addons\ofxOpenCv\libs\opencv\include\opencv2\ml\;addons\ofxCv\libs\CLD\src\;addons\ofxOpenCv\libs\opencv\include\opencv\;addons\ofxKinect\libs\libfreenect\include\;addons\ofxKinect\libs\libusb-1.0\include\libusb-1.0\;addons\ofxXmlSettings\src\;addons\ofxXmlSettings\libs\;addons\ofxOpenCv\libs\opencv\include\opencv2\features2d\;addons\ofxKinect\src\extra\;addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d\;addons\ofxARtoolkitPlus\src\;addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect\;addons\ofxKinect\libs\libusb-win32\include\;addons\ofxOpenCv\libs\opencv\include\opencv2\;" />
 		<Build>
 			<Target title="release">
 				<Option output="bin/$(PROJECT_NAME)" prefix_auto="1" extension_auto="1" />
@@ -15,7 +15,7 @@
 				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworks.lib;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-calib 1" />
+				<Option parameters="-calib 0" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
@@ -32,7 +32,6 @@
 				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworksDebug.lib;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-calib 1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
@@ -137,6 +136,16 @@
 			<Add directory="../../../addons/ofxArgParser/src" />
 			<Add directory="../../../addons/ofxARtoolkitPlus/libs" />
 			<Add directory="../../../addons/ofxARtoolkitPlus/src" />
+			<Add directory="../../../addons/ofxCv/libs" />
+			<Add directory="../../../addons/ofxCv/src" />
+			<Add directory="../../../addons/ofxCv/libs/CLD" />
+			<Add directory="../../../addons/ofxCv/libs/CLD/include" />
+			<Add directory="../../../addons/ofxCv/libs/CLD/include/CLD" />
+			<Add directory="../../../addons/ofxCv/libs/CLD/src" />
+			<Add directory="../../../addons/ofxCv/libs/ofxCv" />
+			<Add directory="../../../addons/ofxCv/libs/ofxCv/include" />
+			<Add directory="../../../addons/ofxCv/libs/ofxCv/include/ofxCv" />
+			<Add directory="../../../addons/ofxCv/libs/ofxCv/src" />
 			<Add directory="../../../addons/ofxReprojection/libs" />
 			<Add directory="../../../addons/ofxReprojection/src" />
 			<Add directory="../../../addons/ofxARtoolkitPlus/include" />
@@ -214,6 +223,93 @@
 		</Unit>
 		<Unit filename="../../../addons/ofxArgParser/src/ofxArgParser.h">
 			<Option virtualFolder="addons/ofxArgParser/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/include/CLD/ETF.h">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/include/CLD" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/include/CLD/fdog.h">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/include/CLD" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/include/CLD" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/include/CLD/myvec.h">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/include/CLD" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/src/ETF.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/CLD/src/fdog.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/CLD/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Calibration.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ContourFinder.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Distance.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Helpers.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Tracker.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Utilities.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Wrappers.h">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/include/ofxCv" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Calibration.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/ContourFinder.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Distance.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Flow.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Helpers.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Kalman.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/ObjectFinder.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/RunningBackground.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Tracker.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Utilities.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/libs/ofxCv/src/Wrappers.cpp">
+			<Option virtualFolder="addons/ofxCv/libs/ofxCv/src" />
+		</Unit>
+		<Unit filename="../../../addons/ofxCv/src/ofxCv.h">
+			<Option virtualFolder="addons/ofxCv/src" />
 		</Unit>
 		<Unit filename="../../../addons/ofxGui/src/ofxBaseGui.cpp">
 			<Option virtualFolder="addons/ofxGui/src" />
@@ -745,6 +841,27 @@
 		</Unit>
 		<Unit filename="icon.rc">
 			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="src/Boid.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Boid.h">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Flocking.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Flocking.h">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Simulation.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Simulation.h">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/Vector.h">
+			<Option virtualFolder="src" />
 		</Unit>
 		<Unit filename="src/main.cpp">
 			<Option virtualFolder="src" />

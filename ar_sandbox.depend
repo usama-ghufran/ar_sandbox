@@ -2216,13 +2216,13 @@
 	"ofAppGLFWWindow.h"
 	"ofxArgParser.h"
 
-1442677847 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
+1442769185 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
-	"ofxOpenCV.h"
+	"ofxCV.h"
 	"ofxArgParser.h"
-	"opencv2/opencv.hpp"
+	"Simulation.h"
 
 1388882358 f:\devtools\openframeworks_codeblocks\addons\ofxreprojection\src\ofxreprojection.h
 	"ofMain.h"
@@ -2253,7 +2253,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1442677511 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
+1442769167 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
 
 1410237184 f:\devtools\openframeworks_codeblocks\addons\ofxopencv\libs\opencv\include\opencv2\opencv.hpp
@@ -2431,4 +2431,163 @@
 1410237184 source:f:\devtools\openframeworks_codeblocks\addons\ofxgui\src\ofxtoggle.cpp
 	"ofxToggle.h"
 	"ofGraphics.h"
+
+1442761107 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\simulation.h
+	<vector>
+	"Vector.h"
+	"Flocking.h"
+	<unistd.h>
+	<windows.h>
+
+1442750807 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\vector.h
+	<cmath>
+	<iostream>
+	<stdlib.h>
+
+1442757480 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.h
+	"Boid.h"
+	<cstring>
+
+1442750226 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.h
+	"Vector.h"
+	<vector>
+
+1442760795 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.cpp
+	"Boid.h"
+
+1442751300 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.cpp
+	"Flocking.h"
+
+1442768449 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\simulation.cpp
+	"Simulation.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\src\etf.cpp
+	"ETF.h"
+	"imatrix.h"
+	"ofMain.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\include\cld\etf.h
+	"imatrix.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\include\cld\imatrix.h
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\src\fdog.cpp
+	"ofMain.h"
+	<cmath>
+	"ETF.h"
+	"fdog.h"
+	"myvec.h"
+	"imatrix.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\include\cld\fdog.h
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\cld\include\cld\myvec.h
+	<cmath>
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\calibration.cpp
+	"ofxCv/Calibration.h"
+	"ofxCv/Helpers.h"
+	"ofFileUtils.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\calibration.h
+	"ofxCv.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\src\ofxcv.h
+	"opencv2/opencv.hpp"
+	"ofxCv/Utilities.h"
+	"ofxCv/Wrappers.h"
+	"ofxCv/Helpers.h"
+	"ofxCv/Distance.h"
+	"ofxCv/Calibration.h"
+	"ofxCv/Tracker.h"
+	"ofxCv/ContourFinder.h"
+	"ofxCv/RunningBackground.h"
+	"ofxCv/Flow.h"
+	"ofxCv/ObjectFinder.h"
+	"ofxCv/Kalman.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\utilities.h
+	"ofMain.h"
+	"opencv2/opencv.hpp"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\wrappers.h
+	"ofMain.h"
+	"opencv2/opencv.hpp"
+	"ofxCv/Utilities.h"
+	"imatrix.h"
+	"ETF.h"
+	"fdog.h"
+	"myvec.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\helpers.h
+	"opencv2/opencv.hpp"
+	"ofMain.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\distance.h
+	<string>
+	<vector>
+	<cstdlib>
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\tracker.h
+	"opencv2/opencv.hpp"
+	<utility>
+	<map>
+	"ofMath.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\contourfinder.h
+	"ofxCv/Utilities.h"
+	"ofxCv/Tracker.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\runningbackground.h
+	"ofxCv/Utilities.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\flow.h
+	"ofxCv.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\objectfinder.h
+	"ofxCv/Utilities.h"
+	"ofxCv/Tracker.h"
+	"ofxCv.h"
+
+1439536224 f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\include\ofxcv\kalman.h
+	"ofxCv.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\contourfinder.cpp
+	"ofxCv/ContourFinder.h"
+	"ofxCv/Wrappers.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\distance.cpp
+	"ofxCv/Distance.h"
+	<string.h>
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\flow.cpp
+	"ofxCv/Flow.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\helpers.cpp
+	"ofxCv/Helpers.h"
+	"ofxCv/Utilities.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\kalman.cpp
+	"Kalman.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\objectfinder.cpp
+	"ObjectFinder.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\runningbackground.cpp
+	"ofxCv/RunningBackground.h"
+	"ofxCv/Wrappers.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\tracker.cpp
+	"ofxCv/Tracker.h"
+	"ofxCv/Utilities.h"
+	"ofRectangle.h"
+	"ofVec2f.h"
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\utilities.cpp
+	"ofxCv/Utilities.h"
+	"ofMath.h"
+	<stdint.h>
+
+1439536224 source:f:\devtools\openframeworks_codeblocks\addons\ofxcv\libs\ofxcv\src\wrappers.cpp
+	"ofxCv/Wrappers.h"
 

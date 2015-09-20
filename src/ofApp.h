@@ -7,13 +7,12 @@
 
 #include "ofxReprojection.h"
 #include "ofxKinect.h"
-#include "ofxOpenCV.h"
+#include "ofxCV.h"
 #include "ofxArgParser.h"
-#include "opencv2/opencv.hpp"
 #include "Simulation.h"
 
-#define WIN_WIDTH 1920*0.5
-#define WIN_HEIGHT 1080*0.5
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
 
 class ofApp : public ofBaseApp {
 public:
@@ -37,7 +36,9 @@ public:
 	cv::Point drawkinectMask[4];
 	int maskPoints;
 	cv::Mat mask;
+	float mapRez;
 	cv::Mat flockImg;
+	ofImage flockingImgOF;
 
 	bool writeMask;
 

@@ -101,7 +101,7 @@ Simulation::init(
         float rand_radius = (float)randomRange(0,(int)(startPositionRadius*100),seed+i*1324)/100;
         float theta = (float)randomRange(0,360,seed+i*4321);//Arbritary +1. just to change seed
         flock.addBoid(startPosition.x+rand_radius*cos(theta*PI/180),startPosition.y+rand_radius*sin(theta*PI/180));
-        cout<<" \n x y :"<<startPosition.x+rand_radius*cos(theta*PI/180)<<" "<<startPosition.y+rand_radius*sin(theta*PI/180)<<"   rand radius: "<<rand_radius<<" theta "<<theta;
+
     }
 
 }
