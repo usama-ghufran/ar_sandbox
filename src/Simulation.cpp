@@ -1,31 +1,22 @@
 #include "Simulation.h"
-
-
 using namespace math;
 
-void
-Simulation::loadScene(float startX,float startY,float endX,float endY,int _x_bound,int _y_bound)
-{
+void Simulation::loadScene(float startX,float startY,float endX,float endY,int _x_bound,int _y_bound){
 	startPosition = Vec2f(startX,startY);
 	endPosition = Vec2f(endX,endY);
 
-    x_bound = _x_bound;
-    y_bound = _y_bound;
+        x_bound = _x_bound;
+        y_bound = _y_bound;
 
-    cout<<"The grid is "<<x_bound<<" x "<<y_bound<<"\n";
+        cout<<"The grid is "<<x_bound<<" x "<<y_bound<<"\n";
 
 }
 
-bool
-Simulation::frame()
-{
-    int status = flock.update();
-	sleep(sleepTime);
+bool Simulation::frame(){
 
-    if(status)
-        return true;
-    else
-        return false;
+int status = flock.update();
+sleep(sleepTime);
+return status? true : false;
 }
 
 

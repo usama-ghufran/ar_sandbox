@@ -1,50 +1,35 @@
 #include "Flocking.h"
 
-
-void Flocking::draw()
-{
-    for(int i = 0; i < boids.size(); i++)
-    {
-        boids[i].draw();
-    }
+void Flocking::draw(){
+        for(int i = 0; i < boids.size(); i++){
+                boids[i].draw();
+        }
 }
-
-
 
 int Flocking::update()
 {
-    int i;
+int i;
+        for(i = 0; i < boids.size(); i++){
+                if(boids[i].isHit(destination.x,destination.y,destinationArea)){
+                    boids[i].reachedDestination = true;
+                }
 
-    for(i = 0; i < boids.size(); i++)
-    {
+                if(useCollisionFromSDF){
+                        Vec2f dir = partialDerivaties[(int)boids[i].loc.x][(int)boids[i].loc.y];
+                        float val = collisionSDF[(int)boids[i].loc.x][(int)boids[i].loc.y];
 
-        if(boids[i].isHit(destination.x,destination.y,destinationArea))
-        {
-            boids[i].reachedDestination = true;
+                        if(val==0)
+                                val=0.001;
+                        boids[i].seek(dir+boids[i].loc,dir.length()*collisionWeight/val);
+                }
+                boids[i].seek(destination,destWeight); //seek the Goal !@#
+                boids[i].update(boids);
+
+                if(boids[i].reachedDestination)
+                    removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
         }
 
-        if(useCollisionFromSDF)
-        {
-            Vec2f dir = partialDerivaties[(int)boids[i].loc.x][(int)boids[i].loc.y];
-			float val = collisionSDF[(int)boids[i].loc.x][(int)boids[i].loc.y];
-
-            if(val==0)
-            	val=0.001;
-			boids[i].seek(dir+boids[i].loc,dir.length()*collisionWeight/val);
-
-        }
-		boids[i].seek(destination,destWeight); //seek the Goal !@#
-		boids[i].update(boids);
-
-        if(boids[i].reachedDestination)
-            removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
-
-    }
-
-	if(flockSize()==0)
-        return 0;
-    else
-        return 1;
+return flockSize()==0? 0: 1;
 }
 
 
