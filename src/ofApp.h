@@ -31,14 +31,18 @@ public:
 
 	bool rendererInited;
     int doCalib;
-
+    bool fakeKinect;
+    float mapRez;
 	cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
 	int maskPoints;
 	cv::Mat mask;
-	float mapRez;
+	cv::Mat depthImage;
 	cv::Mat flockImg;
+
 	ofImage flockingImgOF;
+	ofImage depthView;
+
 
 	bool writeMask;
 
