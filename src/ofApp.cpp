@@ -3,9 +3,13 @@
 #include "ofxCvGrayscaleImage.h"
 using namespace ofxCv;
 using namespace cv;
-//ImgProc obj;
+ImgProc obj;
 
 void ofApp::setup(){
+
+        obj.img.loadImage("obstacles.png");
+        obj.cvimg.setFromPixels(obj.img.getPixels(),obj.img.getWidth(),obj.img.getHeight());
+
         arguments = ofxArgParser::allKeys();
         ofSetLogLevel(OF_LOG_WARNING);
         ofSetVerticalSync(false);
@@ -115,7 +119,7 @@ if(calibration.isFinalized() && !rendererInited) {
 if(calibration.isFinalized() && rendererInited) {
         //renderer.update();
         sim.frame();
-
+        obj.processImage();
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
         flockImg=black;
 
@@ -123,6 +127,7 @@ if(calibration.isFinalized() && rendererInited) {
             float x = (*boids)[i].loc.x*mapRez;
             float y = (*boids)[i].loc.y*mapRez;
             cv::circle(flockImg,cv::Point(x,y),3,white,-1);
+            obj.boidCollision( (*boids)[i]);
         }
         ofxCv::toOf(flockImg,flockingImgOF);
         flockingImgOF.update();
@@ -156,9 +161,10 @@ ofSetColor(0,0,255);
 */
 renderer.drawImage(flockingImgOF);
 flockingImgOF.draw(0,0);
+
 }
 
-//obj.processImage();
+
 
 }
 
