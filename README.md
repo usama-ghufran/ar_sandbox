@@ -11,7 +11,8 @@ ofxOpenCv (included in openframeworks)
 
 ofxXmlSettings Addon- https://github.com/geoffdonaldson/ofxXmlSettings	
 ofxReprojection Addon- https://github.com/Illd/ofxReprojection	
-ofxArgParser Addon- https://github.com/satoruhiga/ofxArgParser	
+ofxArgParser Addon- https://github.com/satoruhiga/ofxArgParser
+ofxARtoolkitPlus Addon- https://github.com/fishkingsin/ofxARtoolkitPlus	
 
 All addons can be found here- http://www.ofxaddons.com/categories	
 They need to be put in the openframworks/addons folder

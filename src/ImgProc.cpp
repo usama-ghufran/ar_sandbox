@@ -4,25 +4,23 @@
 #include "ofImage.h"
 #include "ofxCvGrayscaleImage.h"
 #include "ofxCvColorImage.h"
-#include <stdio.h>
-
 
 using namespace ofxCv;
 using namespace cv;
+
 void ImgProc:: processImage(){
-//img.draw(0,0);
-ofxCvGrayscaleImage cvimg;
+
 //cvimg = img;
-
-
 //gray.updateTexture();
 //printf("REgions %d\n",i);
 //cout<< "Regions detected "<<regions_detected<<endl;
 //ofImage img;
-img.loadImage("input.jpg");
+
+/*img.loadImage("input.jpg");
 cvimg.setFromPixels(img.getPixels(),img.getWidth(),img.getHeight());
+Mat imgMat = toCv(img);*/
 //img.setColor(OF_IMAGE_GRAYSCALE);
-Mat imgMat = toCv(img);
+
 //img.draw(0,0);
 //input = cv::imread("data/input.jpg",1);
 //if (!input.data)
@@ -37,5 +35,12 @@ contourFinder.draw();
 
 }
 
+void boidCollision(Boid b){
 
+//vector<vector<cv::Point>>* contours = ContourFinder.getContours();
+/*for (int i =0; i< (*contours)->size(); i++){
+        if (*contours)[i].has(b.loc.x, b.loc.y)
+                printf("Boid hit");
+}*/
 
+}

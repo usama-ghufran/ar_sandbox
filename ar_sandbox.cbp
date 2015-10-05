@@ -32,6 +32,7 @@
 				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworksDebug.lib;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-calib 0" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
@@ -205,7 +206,6 @@
 			<Add library="..\..\..\addons\ofxOpenCv\libs\opencv\lib\win_cb\libopencv_gpu231.a" />
 			<Add library="..\..\..\addons\ofxOpenCv\libs\opencv\lib\win_cb\libopencv_ts231.a" />
 			<Add library="..\..\..\addons\ofxOpenCv\libs\opencv\lib\win_cb\libzlib.a" />
-			<Add library="..\..\..\addons\ofxARtoolkitPlus\libs\libARToolKitPlus.dll.a" />
 		</Linker>
 		<ExtraCommands>
 			<Add after='xcopy /e /i /y &quot;$(PROJECT_DIR)..\..\..\export\win_cb\*.dll&quot;  &quot;$(PROJECT_DIR)bin&quot;' />
@@ -214,9 +214,11 @@
 		</ExtraCommands>
 		<Unit filename="../../../addons/ofxARtoolkitPlus/src/ofxARToolkitPlus.cpp">
 			<Option virtualFolder="addons/ofxARtoolkitPlus/src" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../../../addons/ofxARtoolkitPlus/src/ofxARToolkitPlus.h">
 			<Option virtualFolder="addons/ofxARtoolkitPlus/src" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../../../addons/ofxArgParser/src/ofxArgParser.cpp">
 			<Option virtualFolder="addons/ofxArgParser/src" />
@@ -854,6 +856,8 @@
 		<Unit filename="src/Flocking.h">
 			<Option virtualFolder="src" />
 		</Unit>
+		<Unit filename="src/ImgProc.cpp" />
+		<Unit filename="src/ImgProc.h" />
 		<Unit filename="src/Simulation.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
