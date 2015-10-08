@@ -11,8 +11,14 @@
 #include "ofxArgParser.h"
 #include "Simulation.h"
 
-#define WIN_WIDTH 1920
-#define WIN_HEIGHT 1080
+#define WIN_WIDTH 1920*0.5
+#define WIN_HEIGHT 1080*0.5
+
+#define IMG_WIDTH 640
+#define IMG_HEIGHT 480
+
+#define KINECT_WIDTH 640
+#define KINECT_HEIGHT 480
 
 class ofApp : public ofBaseApp {
 public:
@@ -32,7 +38,8 @@ public:
 	bool rendererInited;
     int doCalib;
     bool fakeKinect;
-    float mapRez;
+    float mapRezSim;
+    float mapRezImg;
 	cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
 	int maskPoints;
