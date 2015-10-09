@@ -1,7 +1,7 @@
 #include "Boid.h"
 
 
-Boid::Boid(int x, int y, int xbound, int ybound,
+Boid::Boid(int num,int x, int y, int xbound, int ybound,
         int     mboundaryPadding    ,
         float   mmaxSpeed           ,
         float   mmaxForce           ,
@@ -12,7 +12,7 @@ Boid::Boid(int x, int y, int xbound, int ybound,
         float   mflockAliRadius     ,
         float   mflockCohRadius     )
 {
-
+    id = num;
     loc.setval(x,y);
 	vel.setval(0,0);
 	acc.setval(0,0);

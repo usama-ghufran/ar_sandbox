@@ -10,9 +10,10 @@
 #include "ofxCV.h"
 #include "ofxArgParser.h"
 #include "Simulation.h"
+#include "ImgProc.h"
 
-#define WIN_WIDTH 1920
-#define WIN_HEIGHT 1080
+#define WIN_WIDTH 1366//1920
+#define WIN_HEIGHT 768//1080
 
 class ofApp : public ofBaseApp {
 public:
@@ -29,6 +30,7 @@ public:
 	ofxReprojectionCalibrationData dataset;
 	ofxReprojectionRenderer2D renderer;
 
+    ImgProc obj;
 	bool rendererInited;
     int doCalib;
     bool fakeKinect;
@@ -38,11 +40,12 @@ public:
 	int maskPoints;
 	cv::Mat mask;
 	cv::Mat depthImage;
+	cv::Mat depthImageThresh;
 	cv::Mat flockImg;
 
 	ofImage flockingImgOF;
 	ofImage depthView;
-
+    int thresh;
 
 	bool writeMask;
 

@@ -9,7 +9,7 @@ using namespace std;
 class Boid {
 public:
 
-	Boid(int x, int y, int xbound, int ybound,
+	Boid(int id,int x, int y, int xbound, int ybound,
 		int 	mboundaryPadding	,
 		float 	mmaxSpeed 			,
 		float 	mmaxForce 			,
@@ -20,12 +20,13 @@ public:
 		float 	mflockAliRadius 	,
 		float 	mflockCohRadius 	);
 
+    int id;
 
     float dist(Vec2f v1,Vec2f v2);
     float clamp(float val, float minval, float maxval);
 
 
-	void update(vector<Boid> &boids);
+	void update	(vector<Boid> &boids);
 
     void seek(Vec2f target,float weight=1);
     void avoid(Vec2f target,float weight=1);
@@ -50,6 +51,7 @@ public:
 
 	bool reachedDestination;
 	bool hitObstacle;
+	bool collided_with_contour=false;
 
 	int 	boundaryPadding;
 	float 	maxSpeed;

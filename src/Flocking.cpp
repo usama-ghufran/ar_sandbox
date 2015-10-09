@@ -33,9 +33,9 @@ return flockSize()==0? 0: 1;
 }
 
 
-void Flocking::addBoid(int x, int y)
+void Flocking::addBoid(int id, int x, int y)
 {
-    boids.push_back(Boid(x, y, x_bound, y_bound, boundaryPadding,
+    boids.push_back(Boid(id,x, y, x_bound, y_bound, boundaryPadding,
     											maxSpeed 		,
 												maxForce 		,
 												flockSepWeight	,

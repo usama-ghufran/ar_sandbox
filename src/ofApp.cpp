@@ -1,12 +1,15 @@
 #include "ofApp.h"
-#include "ImgProc.h"
+
 #include "ofxCvGrayscaleImage.h"
 using namespace ofxCv;
 using namespace cv;
-ImgProc obj;
+
 
 void ofApp::setup()
 {
+// Setup for Collision Detection
+    obj.nativeContourSetup();
+
     arguments = ofxArgParser::allKeys();
     ofSetLogLevel(OF_LOG_WARNING);
     ofSetVerticalSync(false);
@@ -21,6 +24,7 @@ void ofApp::setup()
     calibration.enableKeys();
     calibration.enableChessboardMouseControl();
 
+    thresh=210;
     rendererInited = false;
     writeMask=true;
     mapRez=1;
@@ -36,6 +40,8 @@ void ofApp::setup()
     }
     else
         depthImage=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
+
+    depthImageThresh=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
 
     flockImg=cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
     flockingImgOF.allocate(1920,1080,OF_IMAGE_COLOR);
@@ -115,6 +121,7 @@ void ofApp::update()
 
     cv::Scalar white(255,255,255);
     cv::Scalar black(0,0,0);
+    cv::Scalar green(0,255,0);
 
     if(!calibration.isFinalized())
     {
@@ -138,9 +145,13 @@ void ofApp::update()
 
     if(calibration.isFinalized() && rendererInited)
     {
-        //renderer.update();
+        renderer.update();
         sim.frame();
-        obj.processImage();
+        //obj.processImage();
+        obj.nativeContourFind(depthImageThresh);
+        //obj.nativeContourFind();
+
+
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
         flockImg=black;
 
@@ -148,14 +159,25 @@ void ofApp::update()
         {
             float x = (*boids)[i].loc.x*mapRez;
             float y = (*boids)[i].loc.y*mapRez;
-            cv::circle(flockImg,cv::Point(x,y),3,white,-1);
+
             obj.boidCollision( (*boids)[i]);
+            //obj.boidBBCollision( (*boids)[i]);
+
+            if ((*boids)[i].collided_with_contour){
+                cv::circle(flockImg,cv::Point(x,y),3,green,-1);
+              // (*boids)[i].collided_with_contour=false;
+            }
+            else
+                cv::circle(flockImg,cv::Point(x,y),3,white,-1);
         }
 
         ofxCv::toOf(flockImg,flockingImgOF);
         flockingImgOF.update();
-        ofxCv::toOf(depthImage,depthView);
+
+        cv::threshold(depthImage,depthImageThresh,thresh,255,0);
+        ofxCv::toOf(depthImageThresh,depthView);
         depthView.update();
+
     }
 }
 
@@ -179,18 +201,22 @@ void ofApp::draw()
     if(calibration.isFinalized() && rendererInited)
     {
         //renderer.drawHueDepthImage();
-        /*
-        vector<Boid>* boids = flockDisplay->getBoidsHandle();
+
+       /* vector<Boid>* boids = flockDisplay->getBoidsHandle();
         ofSetColor(0,0,255);
         for(int i=0;i<boids->size();i++)
         {
             ofCircle((*boids)[i].loc.x*mapRez,(*boids)[i].loc.y*mapRez,2);
         }
-        ofSetColor(0,0,255);
-        */
-        renderer.drawImage(flockingImgOF);
-        flockingImgOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        depthView.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        ofSetColor(0,0,255);*/
+
+        //renderer.drawImage(flockingImgOF);
+        flockingImgOF.draw(0,0,WIN_WIDTH*0.5*2,WIN_HEIGHT*0.5*2);
+        //renderer.drawImage(depthView);
+        //depthView.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        depthView.draw(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
+        //obj.contourFinder.draw();
+        obj.nativeDrawContours();
     }
 
 }
@@ -205,6 +231,16 @@ void ofApp::keyPressed(int key)
         break;
     case 'K':
         imwrite("data/fakeKinect.bmp",depthImage);
+        break;
+    case 'T':
+        obj.thresholdVal+=10;
+        thresh+=1;
+        cout<<"\nthresh "<<thresh<<endl;
+        break;
+    case 't':
+        obj.thresholdVal-=10;
+        thresh-=1;
+        cout<<"\nthresh "<<thresh<<endl;
         break;
     }
 }

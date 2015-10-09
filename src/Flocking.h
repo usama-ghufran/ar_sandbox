@@ -7,7 +7,7 @@ class Flocking {
 public:
 	int update();
 	void addBoid();
-	void addBoid(int x, int y);
+	void addBoid(int id,int x, int y);
     void removeBoid(int x, int y, int radius);
     void setBounds(int xbound, int ybound);
     int flockSize();
