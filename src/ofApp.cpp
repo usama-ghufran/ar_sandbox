@@ -1,12 +1,12 @@
 #include "ofApp.h"
-#include "ImgProc.h"
-#include "ofxCvGrayscaleImage.h"
+
 using namespace ofxCv;
 using namespace cv;
-//ImgProc obj;
+
 
 void ofApp::setup()
 {
+    scene.loadTerrain("terrain.txt");
     arguments = ofxArgParser::allKeys();
     ofSetLogLevel(OF_LOG_WARNING);
     ofSetVerticalSync(false);

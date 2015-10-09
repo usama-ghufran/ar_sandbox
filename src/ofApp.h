@@ -10,6 +10,9 @@
 #include "ofxCV.h"
 #include "ofxArgParser.h"
 #include "Simulation.h"
+#include "ImgProc.h"
+#include "Terrain.h"
+
 
 #define WIN_WIDTH 1920*0.5
 #define WIN_HEIGHT 1080*0.5
@@ -55,5 +58,6 @@ public:
 
 	Simulation sim;
 	Flocking* flockDisplay;
+	Terrain scene;
 
 };

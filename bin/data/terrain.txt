@@ -1,0 +1,5 @@
+textures/grass.jpg
+textures/sand.jpg
+textures/water.jpg
+textures/pebble.jpg
+textures/rocky_snow.jpg

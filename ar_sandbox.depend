@@ -2541,13 +2541,15 @@
 	"ofAppGLFWWindow.h"
 	"ofxArgParser.h"
 
-1444327639 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
+1444356938 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
 	"ofxCV.h"
 	"ofxArgParser.h"
 	"Simulation.h"
+	"ImgProc.h"
+	"Terrain.h"
 
 1388882358 f:\devtools\openframeworks_codeblocks\addons\ofxreprojection\src\ofxreprojection.h
 	"ofMain.h"
@@ -2588,11 +2590,12 @@
 1443541315 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\simulation.cpp
 	"Simulation.h"
 
-1444327639 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
+1444357262 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
-	"ImgProc.h"
-	"ofxCvGrayscaleImage.h"
 
 1443541315 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\imgproc.h
 	"ofxCv.h"
+
+1444356687 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\terrain.h
+	"ofxCV.h"
 
