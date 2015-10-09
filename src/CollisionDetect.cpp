@@ -1,40 +1,23 @@
 #include<stdio.h>
 #include "ofxCv.h"
-#include "ImgProc.h"
+#include "CollisionDetect.h"
 #include "ofImage.h"
 #include "ofxCvGrayscaleImage.h"
 #include "ofxCvColorImage.h"
 #include "Vector.h"
+#include "ofApp.h"
 
 using namespace cv;
 using namespace ofxCv;
 
 
-void ImgProc:: processImage(){
-
-//cvimg = img;
-//gray.updateTexture();
-//printf("REgions %d\n",i);
-//cout<< "Regions detected "<<regions_detected<<endl;
-//ofImage img;
-
-/*img.loadImage("input.jpg");
-cvimg.setFromPixels(img.getPixels(),img.getWidth(),img.getHeight());
-Mat imgMat = toCv(img);*/
-//img.setColor(OF_IMAGE_GRAYSCALE);
-
-//cvimg.draw(0,0);
-//input = cv::imread("data/input.jpg",1);
-//if (!input.data)
- //       printf("Shit happened");
-// contourFinder.setMinAreaRadius(10.0);
- //contourFinder.setMaxAreaRadius(200.0);
+void CollisionDetect:: processImage(){
 contourFinder.setThreshold(thresholdVal);
 vector<vector<cv::Point> > contours = contourFinder.getContours();
 //contourFinder.findContours(img);
 contourFinder.findContours(cvimg);
 }
-void ImgProc::boidBBCollision(Boid &b){
+void CollisionDetect::boidBBCollision(Boid &b){
 for (int i ; i< BBcontours.size();i++){
         if (BBcontours[i].contains(cv::Point(b.loc.x,b.loc.y))){
             cout<<"Boid "<<b.id<<" Hit "<<i<<endl;
@@ -45,7 +28,7 @@ for (int i ; i< BBcontours.size();i++){
 }
 }
 
-void ImgProc::boidCollision(Boid &b){
+void CollisionDetect::boidCollision(Boid &b){
 
 //vector<vector<cv::Point> > contours = contourFinder.getContours();
 //cout<<"Contours Size"<<contours.size();
@@ -72,13 +55,13 @@ for (int i =0; i< contours.size() ; i++){
 }
 }
 
-void ImgProc::nativeContourSetup(){
+void CollisionDetect::nativeContourSetup(){
 
 input=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
 cv::blur(input,input,cv::Size(3,3));
 }
 
-void ImgProc::nativeContourFind(){
+void CollisionDetect::nativeContourFind(){
 Mat threshold_output;
 vector<Vec4i> hierarchy;
 
@@ -90,7 +73,7 @@ findContours( threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPR
 cout<<"Contours After"<<contours.size()<<endl;
 }
 
-void ImgProc::nativeContourFind(cv::Mat depthImg){
+void CollisionDetect::nativeContourFind(cv::Mat depthImg){
 Mat threshold_output;
 vector<Vec4i> hierarchy;
 
@@ -120,7 +103,7 @@ if (contours[i].size()>5){
 
 }
 
-void ImgProc::nativeDrawContours(){
+void CollisionDetect::nativeDrawContours(){
 
 Scalar color = Scalar( 255,0,0 );
  // for( int i = 0; i< 1        ; i++ ){
@@ -139,8 +122,8 @@ outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
 ofSetColor(255,255,255,127);
 outOF.update();
 //outOF.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-outOF.draw(0,0,640/2.0*2.0,480/2.0*2.0);
+outOF.draw(0,0,IMG_WIDTH,IMG_HEIGHT);
 drawing = Scalar(0,0,0);
 BBcontours.clear();
-//cv::Mat drawing=cv::Mat(480,640,CV_8UC3,cv::Scalar(0,0,0));
+
 }

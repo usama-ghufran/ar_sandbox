@@ -1,14 +1,16 @@
 #include "ofApp.h"
 
-#include "ofxCvGrayscaleImage.h"
+
 using namespace ofxCv;
 using namespace cv;
 
 
 void ofApp::setup()
 {
-// Setup for Collision Detection
-    obj.nativeContourSetup();
+
+    // Setup for Collision Detection
+    //obj.nativeContourSetup();
+    scene.loadTerrain("terrain.txt");
 
     arguments = ofxArgParser::allKeys();
     ofSetLogLevel(OF_LOG_WARNING);
@@ -27,7 +29,8 @@ void ofApp::setup()
     thresh=210;
     rendererInited = false;
     writeMask=true;
-    mapRez=1;
+    mapRezSim=3;
+    mapRezImg=3;
     maskPoints=0;
 
     mask=cv::imread("data/mask.bmp",1);
@@ -36,19 +39,18 @@ void ofApp::setup()
     {
         depthImage=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
         if(!depthImage.data)
-            depthImage=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
+            depthImage=cv::Mat(KINECT_HEIGHT,KINECT_WIDTH,CV_8UC1,cv::Scalar(0));
     }
     else
-        depthImage=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
+        depthImage=cv::Mat(KINECT_HEIGHT,KINECT_WIDTH,CV_8UC1,cv::Scalar(0));
 
-    depthImageThresh=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
-
-    flockImg=cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
-    flockingImgOF.allocate(1920,1080,OF_IMAGE_COLOR);
-    depthView.allocate(640,480,OF_IMAGE_GRAYSCALE);
+    //depthImageThresh=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
+    flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+    flockingImgOF.allocate(IMG_WIDTH*mapRezImg,IMG_HEIGHT*mapRezImg,OF_IMAGE_COLOR);
+    depthView.allocate(KINECT_WIDTH,KINECT_HEIGHT,OF_IMAGE_GRAYSCALE);
 
     if(!mask.data)
-        mask = cv::Mat(1080,1920,CV_8UC3,cv::Scalar(0,0,0));
+        mask = cv::Mat(IMG_HEIGHT,IMG_WIDTH,CV_8UC1,cv::Scalar(0));
 
     //Parse Args
     for (int i = 0; i < arguments.size(); i++)
@@ -86,7 +88,7 @@ void ofApp::setup()
             mendPosRad
     		);
     		*/
-    sim.loadScene(30,30,600,300,1920/mapRez,1080/mapRez);
+    sim.loadScene(50,50,100,100,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
         100 			,
         0.01 		,
@@ -103,7 +105,7 @@ void ofApp::setup()
         20 	,
         20		,
         50		,
-        50
+        0
     );
 
     flockDisplay = sim.getFlockHandle();
@@ -116,12 +118,12 @@ void ofApp::update()
 
     if(!fakeKinect)
         depthImage.data=depthcam.getDepthPixels();
-        //ofxCv::toCv()
 
-
-    cv::Scalar white(255,255,255);
-    cv::Scalar black(0,0,0);
+    cv::Scalar whiteC1(255);
+    cv::Scalar whiteC3(255,255,255);
+    cv::Scalar black(0);
     cv::Scalar green(0,255,0);
+
 
     if(!calibration.isFinalized())
     {
@@ -129,7 +131,7 @@ void ofApp::update()
         if(maskPoints==4 && writeMask)
         {
             mask = black;
-            cv::fillConvexPoly(mask,kinectMask,4,white);
+            cv::fillConvexPoly(mask,kinectMask,4,whiteC1);
             cv::imwrite("data/mask.bmp",mask);
             writeMask=false;
         }
@@ -147,9 +149,10 @@ void ofApp::update()
     {
         renderer.update();
         sim.frame();
+        /*Contour Setup
         //obj.processImage();
-        obj.nativeContourFind(depthImageThresh);
-        //obj.nativeContourFind();
+        obj.nativeContourFind(depthImage);
+        //obj.nativeContourFind();*/
 
 
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
@@ -157,18 +160,17 @@ void ofApp::update()
 
         for(int i=0; i<boids->size(); i++)
         {
-            float x = (*boids)[i].loc.x*mapRez;
-            float y = (*boids)[i].loc.y*mapRez;
-
+            float x = (*boids)[i].loc.x*mapRezImg/mapRezSim;
+            float y = (*boids)[i].loc.y*mapRezImg/mapRezSim;
+            /* Collision Detection Place holder
             obj.boidCollision( (*boids)[i]);
             //obj.boidBBCollision( (*boids)[i]);
-
-            if ((*boids)[i].collided_with_contour){
+             if ((*boids)[i].collided_with_contour){
                 cv::circle(flockImg,cv::Point(x,y),3,green,-1);
               // (*boids)[i].collided_with_contour=false;
             }
-            else
-                cv::circle(flockImg,cv::Point(x,y),3,white,-1);
+            else*/
+                cv::circle(flockImg,cv::Point(x,y),3,whiteC3,-1);
         }
 
         ofxCv::toOf(flockImg,flockingImgOF);
@@ -187,12 +189,13 @@ void ofApp::draw()
     {
         calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT);
         calibration.drawChessboard(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
+
         //Draw Mask Points;
         ofSetColor(255,0,0);
 
         for(int i=0; i<maskPoints; i++)
         {
-            ofCircle(drawkinectMask[i].x,drawkinectMask[i].y,3);
+            ofCircle(drawkinectMask[i].x,drawkinectMask[i].y,5);
             ofDrawBitmapString(ofToString(i),drawkinectMask[i].x,drawkinectMask[i].y);
         }
         ofSetColor(255,255,255);
@@ -200,23 +203,11 @@ void ofApp::draw()
 
     if(calibration.isFinalized() && rendererInited)
     {
-        //renderer.drawHueDepthImage();
-
-       /* vector<Boid>* boids = flockDisplay->getBoidsHandle();
-        ofSetColor(0,0,255);
-        for(int i=0;i<boids->size();i++)
-        {
-            ofCircle((*boids)[i].loc.x*mapRez,(*boids)[i].loc.y*mapRez,2);
-        }
-        ofSetColor(0,0,255);*/
-
-        //renderer.drawImage(flockingImgOF);
-        flockingImgOF.draw(0,0,WIN_WIDTH*0.5*2,WIN_HEIGHT*0.5*2);
-        //renderer.drawImage(depthView);
-        //depthView.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        depthView.draw(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
-        //obj.contourFinder.draw();
-        obj.nativeDrawContours();
+        renderer.drawHueDepthImage();
+        flockingImgOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        depthView.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        // Debug to draw contours
+        //obj.nativeDrawContours();
     }
 
 }
@@ -257,7 +248,7 @@ void ofApp::mousePressed(int x, int y, int button)
             maskPoints=0;
             writeMask=true;
         }
-        kinectMask[maskPoints]=cv::Point(x*2*1920/(WIN_WIDTH),y*2*1080/(WIN_HEIGHT));
+        kinectMask[maskPoints]=cv::Point(x*2*IMG_WIDTH/(WIN_WIDTH),y*2*IMG_HEIGHT/(WIN_HEIGHT));
         drawkinectMask[maskPoints]=cv::Point(x,y);
         maskPoints++;
     }
