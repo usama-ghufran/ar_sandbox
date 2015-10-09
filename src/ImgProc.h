@@ -2,7 +2,8 @@
 #include "Boid.h"
 #include "ofxCv.h"
 #include"ofxCvGrayscaleImage.h"
-#include "ofApp.h"
+
+
 
 class ImgProc{
 public:

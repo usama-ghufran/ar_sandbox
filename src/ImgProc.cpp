@@ -35,8 +35,14 @@ vector<vector<cv::Point> > contours = contourFinder.getContours();
 contourFinder.findContours(cvimg);
 }
 void ImgProc::boidBBCollision(Boid &b){
-
-
+for (int i ; i< BBcontours.size();i++){
+        if (BBcontours[i].contains(cv::Point(b.loc.x,b.loc.y))){
+            cout<<"Boid "<<b.id<<" Hit "<<i<<endl;
+            b.collided_with_contour=true;
+            b.vel = math::Vec2f(-1,-1)*(b.vel);
+            break;
+        }
+}
 }
 
 void ImgProc::boidCollision(Boid &b){
@@ -45,13 +51,24 @@ void ImgProc::boidCollision(Boid &b){
 //cout<<"Contours Size"<<contours.size();
 
 for (int i =0; i< contours.size() ; i++){
-
-        vector<cv::Point>::iterator it = std::find(contours[i].begin(), contours[i].end(),cv::Point(b.loc.x, b.loc.y));
+        // Check for Point in contour
+       /* vector<cv::Point>::iterator it = std::find(contours[i].begin(), contours[i].end(),cv::Point(b.loc.x, b.loc.y));
         if(it!=contours[i].end()){
                 printf("Boid %d hit  contour %d of size %d\n", b.id,i,contours[i].size());
                 b.collided_with_contour = true;
                 b.vel = math::Vec2f(-1,-1)*(b.vel);
         }
+*/
+        // Point polygon test
+        double dist = cv::pointPolygonTest(contours[i],cv:: Point(b.loc.x,b.loc.y), false);
+
+        if (dist >= 0){
+            //cout << "Distance" << dist<<endl;
+            b.collided_with_contour = true;
+            b.vel = math::Vec2f(-1,-1)*(b.vel);
+        }
+
+
 }
 }
 
@@ -82,6 +99,9 @@ cv::threshold( depthImg, threshold_output, thresholdVal, 255, THRESH_BINARY );
 findContours( threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0) );
 vector<vector<cv::Point> > contours_poly( contours.size() );
 vector<cv::Rect> boundRect( contours.size() );
+
+vector<cv::RotatedRect> rotRect(contours.size());
+
 Scalar color = Scalar( 255,255,0 );
 
 //cv::Mat drawing=cv::Mat(480,640,CV_8UC3,cv::Scalar(0,0,0));
@@ -89,8 +109,15 @@ for( int i = 0; i< contours.size()        ; i++ ){
 approxPolyDP( Mat(contours[i]), contours_poly[i], 3, true );
 boundRect[i] = boundingRect( Mat(contours_poly[i]) );
 BBcontours.push_back(boundRect[i]);
- cv::rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
+
+if (contours[i].size()>5){
+    rotRect[i] = cv::fitEllipse(Mat (contours[i]));
+    ellipse(drawing,rotRect[i],color, 2,8);
 }
+ cv::rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
+
+}
+
 }
 
 void ImgProc::nativeDrawContours(){
@@ -98,10 +125,10 @@ void ImgProc::nativeDrawContours(){
 Scalar color = Scalar( 255,0,0 );
  // for( int i = 0; i< 1        ; i++ ){
 for( int i = 0; i< contours.size()        ; i++ ){
-       //cv::drawContours( drawing, contours, i, color, 2, 8, vector<Vec4i>(),0, cv::Point() );
+       cv::drawContours( drawing, contours, i, color, 2, 8, vector<Vec4i>(),0, cv::Point() );
 }
 
-//cout<<"Threshold "<<thresholdVal;
+cout<<"Threshold "<<thresholdVal;
 //cout<<"Contours After"<<contours.size()<<endl;
 ofImage outOF;
 ofEnableAlphaBlending();
@@ -112,7 +139,8 @@ outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
 ofSetColor(255,255,255,127);
 outOF.update();
 //outOF.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-outOF.draw(0,0,640/2.0*2,480/2.0*2);
+outOF.draw(0,0,640/2.0*2.0,480/2.0*2.0);
 drawing = Scalar(0,0,0);
+BBcontours.clear();
 //cv::Mat drawing=cv::Mat(480,640,CV_8UC3,cv::Scalar(0,0,0));
 }
