@@ -14,6 +14,7 @@ Boid::Boid(int num,int x, int y, int xbound, int ybound,
 {
     id = num;
     loc.setval(x,y);
+    prev_loc.setval(x,y);
 	vel.setval(0,0);
 	acc.setval(0,0);
     r = 3.0;
@@ -42,6 +43,7 @@ void Boid::update(vector<Boid> &boids) {
     vel += acc;   // Update velocity
     vel.x = clamp(vel.x, -maxSpeed, maxSpeed);  // Limit speed
 	vel.y = clamp(vel.y, -maxSpeed, maxSpeed);  // Limit speed
+	prev_loc = loc;
     loc += vel;
     acc.setval(0,0);  // Resetval accelertion to 0 each cycle
     orient = (float)atan2(vel.y,vel.x) * 180/PI;

@@ -43,7 +43,7 @@ public:
 
     void draw();
 
-	Vec2f loc,vel,acc;
+	Vec2f loc,vel,acc, prev_loc;
 	Vec2i endCorner;
 
     float r;
