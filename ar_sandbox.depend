@@ -2601,17 +2601,18 @@
 
 1442498475 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\icon.rc
 
-1444057723 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\main.cpp
+1444492822 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\main.cpp
 	"ofApp.h"
 	"ofAppGLFWWindow.h"
 	"ofxArgParser.h"
 
-1444492021 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.h
+1444492822 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
 	"ofxCV.h"
 	"ofxArgParser.h"
+	"ofxGui.h"
 	"Simulation.h"
 	"CollisionDetect.h"
 	"Terrain.h"
@@ -4683,7 +4684,7 @@
 1410237186 g:\ar\of_v0.8.4_win_cb_release\addons\ofxopencv\src\ofxcvblob.h
 	"ofxCvConstants.h"
 
-1444412747 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\terrain.h
+1444492822 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\terrain.h
 	"ofxCV.h"
 
 1410237198 g:\ar\of_v0.8.4_win_cb_release\libs\openframeworks\app\ofappglfwwindow.h
@@ -5149,7 +5150,7 @@
 1444412075 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\flocking.cpp
 	"Flocking.h"
 
-1444489823 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.cpp
+1444495131 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
 
 1444414021 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\imgproc.cpp
@@ -5161,7 +5162,7 @@
 	"ofxCvColorImage.h"
 	"Vector.h"
 
-1444412747 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\terrain.cpp
+1444492822 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\terrain.cpp
 	"Terrain.h"
 
 1444491480 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.h
@@ -5170,7 +5171,7 @@
 	"ofxCvGrayscaleImage.h"
 	"constants.h"
 
-1444491498 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.cpp
+1444496415 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.cpp
 	<stdio.h>
 	"ofxCv.h"
 	"CollisionDetect.h"
@@ -5179,6 +5180,14 @@
 	"ofxCvColorImage.h"
 	"Vector.h"
 
-1444492000 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\constants.h
+1444497793 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\constants.h
 	<iostream>
+
+1410237184 g:\ar\of_v0.8.4_win_cb_release\addons\ofxgui\src\ofxgui.h
+	"ofxToggle.h"
+	"ofxSlider.h"
+	"ofxSliderGroup.h"
+	"ofxPanel.h"
+	"ofxButton.h"
+	"ofxLabel.h"
 

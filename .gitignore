@@ -27,3 +27,8 @@
 *.out
 *.app
 
+
+# CodeBlocks files
+*.depend
+*.layout
+*.res

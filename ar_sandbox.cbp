@@ -850,8 +850,12 @@
 		<Unit filename="src/Boid.h">
 			<Option virtualFolder="src" />
 		</Unit>
-		<Unit filename="src/CollisionDetect.cpp" />
-		<Unit filename="src/CollisionDetect.h" />
+		<Unit filename="src/CollisionDetect.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/CollisionDetect.h">
+			<Option virtualFolder="src/" />
+		</Unit>
 		<Unit filename="src/Flocking.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
@@ -864,14 +868,18 @@
 		<Unit filename="src/Simulation.h">
 			<Option virtualFolder="src" />
 		</Unit>
-		<Unit filename="src/Terrain.cpp" />
+		<Unit filename="src/Terrain.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
 		<Unit filename="src/Terrain.h">
 			<Option virtualFolder="src/" />
 		</Unit>
 		<Unit filename="src/Vector.h">
 			<Option virtualFolder="src" />
 		</Unit>
-		<Unit filename="src/constants.h" />
+		<Unit filename="src/constants.h">
+		<Option virtualFolder="src" />
+		</Unit>
 		<Unit filename="src/main.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
