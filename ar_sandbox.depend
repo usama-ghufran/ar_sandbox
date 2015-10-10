@@ -2517,10 +2517,10 @@
 
 1410237194 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\icon.rc
 
-1442760795 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.cpp
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.cpp
 	"Boid.h"
 
-1442750226 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.h
+1444452273 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\boid.h
 	"Vector.h"
 	<vector>
 
@@ -2529,26 +2529,26 @@
 	<iostream>
 	<stdlib.h>
 
-1443541315 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.cpp
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.cpp
 	"Flocking.h"
 
-1442757480 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.h
+1444452273 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\flocking.h
 	"Boid.h"
 	<cstring>
 
-1442660659 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\main.cpp
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\main.cpp
 	"ofApp.h"
 	"ofAppGLFWWindow.h"
 	"ofxArgParser.h"
 
-1444356938 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
+1444452273 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
 	"ofxCV.h"
 	"ofxArgParser.h"
 	"Simulation.h"
-	"ImgProc.h"
+	"CollisionDetect.h"
 	"Terrain.h"
 
 1388882358 f:\devtools\openframeworks_codeblocks\addons\ofxreprojection\src\ofxreprojection.h
@@ -2587,16 +2587,16 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1443541315 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\simulation.cpp
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\simulation.cpp
 	"Simulation.h"
 
-1444357262 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
 
 1443541315 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\imgproc.h
 	"ofxCv.h"
 
-1444356687 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\terrain.h
+1444358188 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\terrain.h
 	"ofxCV.h"
 
 1442498475 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\icon.rc
@@ -5168,4 +5168,22 @@
 	"Boid.h"
 	"ofxCv.h"
 	"ofxCvGrayscaleImage.h"
+
+1444452273 f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\collisiondetect.h
+	"Boid.h"
+	"ofxCv.h"
+	"ofxCvGrayscaleImage.h"
+
+1444358126 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\terrain.cpp
+	"Terrain.h"
+
+1444452273 source:f:\devtools\openframeworks_codeblocks\apps\myapps\ar_sandbox\src\collisiondetect.cpp
+	<stdio.h>
+	"ofxCv.h"
+	"CollisionDetect.h"
+	"ofImage.h"
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"Vector.h"
+	"ofApp.h"
 

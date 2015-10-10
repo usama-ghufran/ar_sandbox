@@ -39,7 +39,7 @@ public:
 	ofxReprojectionCalibrationData dataset;
 	ofxReprojectionRenderer2D renderer;
 
-    CollisionDetect obj;
+  	CollisionDetect obj;
 	bool rendererInited;
     int doCalib;
     bool fakeKinect;
@@ -48,19 +48,24 @@ public:
 	cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
 	int maskPoints;
+
 	cv::Mat mask;
 	cv::Mat depthImage;
-	cv::Mat depthImageThresh;
 	cv::Mat flockImg;
-
+    cv::Mat projectImg;
+    cv::Mat projectImgRGB;
+    ofImage projectImgOF;
 	ofImage flockingImgOF;
-	ofImage depthView;
-    int thresh;
+	ofImage depthImageOF;
+
+    cv::Mat* threshMask;
+    ofImage* threshMaskOF;
 
 	bool writeMask;
 
 	Simulation sim;
 	Flocking* flockDisplay;
 	Terrain scene;
+
 
 };
