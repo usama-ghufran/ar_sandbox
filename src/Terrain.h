@@ -15,10 +15,12 @@ public:
 
     void loadTerrain(string filename,float mapRezImg=3);
     void setDepthImage(cv::Mat* _depthImage);
-    cv::Mat getTerrain();
     void setThreshold(int threshID, int threshVal);
     void processScene();
+    void applyThreshold();
+    void multMapWithMask(cv::Mat img,cv::Mat mask,cv::Mat& dest);
     cv::Mat* getMasks();
+    cv::Mat getTerrain();
 
 private:
     cv::Mat* depthImage;
@@ -27,10 +29,11 @@ private:
     cv::Mat sand;
     cv::Mat rock_snow;
     cv::Mat pebble;
-
     cv::Mat composite;
+    cv::Mat mask[4];
 
     int thresh[3];
-    cv::Mat mask[3];
+    float mapRez;
+
 
 };

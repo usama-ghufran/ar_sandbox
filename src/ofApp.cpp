@@ -23,12 +23,18 @@ void ofApp::setup()
 
     rendererInited = false;
     writeMask=true;
+    guiHide = false;
     mapRezSim=3;
     mapRezImg=3;
     maskPoints=0;
 
     mask=cv::imread("data/mask.bmp",1);
     scene.loadTerrain("terrain.txt",mapRezImg);
+    flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+    projectImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+
+    //flockingImgOF.allocate(IMG_WIDTH*mapRezImg,IMG_HEIGHT*mapRezImg,OF_IMAGE_COLOR);
+    //depthView.allocate(KINECT_WIDTH,KINECT_HEIGHT,OF_IMAGE_GRAYSCALE);
 
     if(fakeKinect)
     {
@@ -38,14 +44,6 @@ void ofApp::setup()
     }
     else
         depthImage=cv::Mat(KINECT_HEIGHT,KINECT_WIDTH,CV_8UC1,cv::Scalar(0));
-
-    flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
-
-    //flockingImgOF.allocate(IMG_WIDTH*mapRezImg,IMG_HEIGHT*mapRezImg,OF_IMAGE_COLOR);
-
-    projectImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
-
-    //depthView.allocate(KINECT_WIDTH,KINECT_HEIGHT,OF_IMAGE_GRAYSCALE);
 
     if(!mask.data)
         mask = cv::Mat(IMG_HEIGHT,IMG_WIDTH,CV_8UC1,cv::Scalar(0));
@@ -66,50 +64,61 @@ void ofApp::setup()
         calibration.finalize();
     }
 
-    /*
-        sim.init(
-            mfishCount 			,
-            mdestWeight 		,
-            mrandSeed 			,
-            msleepTime			,
-            mboundaryPadding 	,
-            mmaxSpeed 			,
-            mmaxForce 			,
-            mflockSepWeight 	,
-            mflockAliWeight 	,
-            mflockCohWeight 	,
-            mcollisionWeight 	,
-            mflockSepRadius 	,
-            mflockAliRadius 	,
-            mflockCohRadius		,
-            mstartPosRad		,
-            mendPosRad
-    		);
-    		*/
     sim.loadScene(50,50,100,100,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
-        100 			,
-        0.01 		,
-        0 			,
-        0.02			,
-        10 	,
-        2			,
-        1 			,
-        1 	,
-        0.5 	,
-        0.25 	,
-        0 	,
-        15 	,
-        20 	,
-        20		,
-        50		,
-        0
+        100 		,//fish count
+        0.01 		,//destination Weight
+        0 			,//rand seed
+        0.00		,//sleep time
+        10 	        ,//boundary padding
+        2			,//max speed
+        1 			,//max force
+        1 	        ,//flock separation weight
+        0.5 	    ,//flock alignment weight
+        0.25 	    ,//flock cohesion weight
+        0 	        ,//collision weight
+        15 	        ,//flock separation radius
+        20 	        ,//flock alignment radius
+        20		    ,//flock cohesion radius
+        50		    ,//start position radius
+        0            //end position radius
     );
 
     flockDisplay = sim.getFlockHandle();
-    scene.setThreshold(0,230);
-    scene.setThreshold(1,220);
-    scene.setThreshold(2,210);
+
+    max_height.addListener(this,&ofApp::heightChanged);
+    min_height.addListener(this,&ofApp::heightChanged);
+    thresh0.addListener(this,&ofApp::thresh0Changed);
+    thresh1.addListener(this,&ofApp::thresh1Changed);
+    thresh2.addListener(this,&ofApp::thresh2Changed);
+
+    terrainControls.setup("Terrain Controls","terrain_settings.xml",10,10);
+    terrainControls.add(max_height.set("Max Height",240,0,255));
+    terrainControls.add(min_height.set("Min Height",170,0,255));
+    terrainControls.add(thresh0.set("Thresh 0",0.9,0,1));
+    terrainControls.add(thresh1.set("Thresh 1",0.5,0,1));
+    terrainControls.add(thresh2.set("Thresh 2",0,0,1));
+    terrainControls.loadFromFile("terrain_settings.xml");
+
+    simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
+}
+void ofApp::heightChanged(int& val)
+{
+    scene.setThreshold(0,((max_height-min_height)*thresh0)+min_height);
+    scene.setThreshold(1,((max_height-min_height)*thresh1)+min_height);
+    scene.setThreshold(2,((max_height-min_height)*thresh2)+min_height);
+}
+void ofApp::thresh0Changed(float& val)
+{
+    scene.setThreshold(0,((max_height-min_height)*val)+min_height);
+}
+void ofApp::thresh1Changed(float& val)
+{
+    scene.setThreshold(1,((max_height-min_height)*val)+min_height);
+}
+void ofApp::thresh2Changed(float& val)
+{
+    scene.setThreshold(2,((max_height-min_height)*val)+min_height);
 }
 
 void ofApp::update()
@@ -119,7 +128,6 @@ void ofApp::update()
 
     if(!fakeKinect)
         depthImage.data=depthcam.getDepthPixels();
-
 
     cv::Scalar whiteC1(255);
     cv::Scalar whiteC3(255,255,255);
@@ -149,17 +157,21 @@ void ofApp::update()
     if(calibration.isFinalized() && rendererInited)
     {
         renderer.update();
-        //sim.frame();
+        sim.frame();
 
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
-        flockImg=black;
+
+        projectImg = scene.getTerrain();
+        cv::cvtColor(projectImg,projectImgRGB,CV_RGB2BGR);
+
+
 
         for(int i=0; i<boids->size(); i++)
         {
             float x = (*boids)[i].loc.x*mapRezImg/mapRezSim;
             float y = (*boids)[i].loc.y*mapRezImg/mapRezSim;
-            cv::circle(flockImg,cv::Point(x,y),3,whiteC3,-1);
-        
+            cv::circle(projectImgRGB,cv::Point(x,y),5,whiteC3,-1);
+
             /* Collision Detection Place holder
             obj.boidCollision( (*boids)[i]);
             //obj.boidBBCollision( (*boids)[i]);
@@ -171,10 +183,8 @@ void ofApp::update()
 
         }
 
-        //projectImg = scene.getTerrain();
-        //cv::cvtColor(projectImg,projectImgRGB,CV_RGB2BGR);
-        //ofxCv::toOf(projectImgRGB,projectImgOF);
-        //projectImgOF.update();
+        ofxCv::toOf(projectImgRGB,projectImgOF);
+        projectImgOF.update();
         scene.processScene();
         threshMask = scene.getMasks();
 
@@ -183,12 +193,6 @@ void ofApp::update()
             ofxCv::toOf(threshMask[i],threshMaskOF[i]);
             threshMaskOF[i].update();
         }
-
-        ofxCv::toOf(flockImg,flockingImgOF);
-        flockingImgOF.update();
-
-        ofxCv::toOf(depthImage,depthImageOF);
-        depthImageOF.update();
 
 
     }
@@ -215,13 +219,24 @@ void ofApp::draw()
     if(calibration.isFinalized() && rendererInited)
     {
         renderer.drawHueDepthImage();
-        //flockingImgOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        //depthImageOF.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        //projectImgOF.draw(0,WIN_HEIGHT*0.5,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        //Disable depth test after renderer call.
+        ofDisableDepthTest();
 
-        threshMaskOF[0].draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        threshMaskOF[1].draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-        threshMaskOF[2].draw(0,WIN_HEIGHT*0.5,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        projectImgOF.draw(WIN_WIDTH*0.2,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+
+        threshMaskOF[0].draw(WIN_WIDTH*0.7,0,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+        threshMaskOF[1].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.3,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+        threshMaskOF[2].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.6,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+
+        ofDrawBitmapString(ofToString(ofGetFrameRate())+" fps", 50, 190);
+
+        if(!guiHide)
+        {
+            terrainControls.draw();
+            simControls.draw();
+        }
+
+
 
     }
 
@@ -240,6 +255,16 @@ void ofApp::keyPressed(int key)
     case 'K':
         imwrite("data/fakeKinect.bmp",depthImage);
         break;
+
+    case 's':
+        if(calibration.isFinalized() && rendererInited)
+        {
+            terrainControls.saveToFile("control_settings.xml");
+        }
+        break;
+
+    case 'h':
+        guiHide=!guiHide;
     }
 }
 
