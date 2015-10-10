@@ -2606,7 +2606,7 @@
 	"ofAppGLFWWindow.h"
 	"ofxArgParser.h"
 
-1444415776 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.h
+1444492021 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.h
 	"ofMain.h"
 	"ofxReprojection.h"
 	"ofxKinect.h"
@@ -4377,7 +4377,7 @@
 	"Boid.h"
 	<cstring>
 
-1444412075 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\boid.h
+1444489463 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\boid.h
 	"Vector.h"
 	<vector>
 
@@ -5143,13 +5143,13 @@
 	"../libs/tinyxml.h"
 	"tinyxml.h"
 
-1444412075 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\boid.cpp
+1444489619 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\boid.cpp
 	"Boid.h"
 
 1444412075 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\flocking.cpp
 	"Flocking.h"
 
-1444415092 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.cpp
+1444489823 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\ofapp.cpp
 	"ofApp.h"
 
 1444414021 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\imgproc.cpp
@@ -5164,8 +5164,21 @@
 1444412747 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\terrain.cpp
 	"Terrain.h"
 
-1444415759 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.h
+1444491480 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.h
 	"Boid.h"
 	"ofxCv.h"
 	"ofxCvGrayscaleImage.h"
+	"constants.h"
+
+1444491498 source:g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\collisiondetect.cpp
+	<stdio.h>
+	"ofxCv.h"
+	"CollisionDetect.h"
+	"ofImage.h"
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"Vector.h"
+
+1444492000 g:\ar\of_v0.8.4_win_cb_release\apps\myapps\ar_sandbox\src\constants.h
+	<iostream>
 
