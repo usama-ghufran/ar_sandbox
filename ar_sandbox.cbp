@@ -850,14 +850,18 @@
 		<Unit filename="src/Boid.h">
 			<Option virtualFolder="src" />
 		</Unit>
+		<Unit filename="src/CollisionDetect.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/CollisionDetect.h">
+			<Option virtualFolder="src/" />
+		</Unit>
 		<Unit filename="src/Flocking.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
 		<Unit filename="src/Flocking.h">
 			<Option virtualFolder="src" />
 		</Unit>
-		<Unit filename="src/ImgProc.cpp" />
-		<Unit filename="src/ImgProc.h" />
 		<Unit filename="src/Simulation.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
