@@ -18,7 +18,7 @@ void CollisionDetect::boidCollision(Boid &b)
         int offset = 5;
         if (dist >= 0)
         {
-            cout << "Boid " << b.id<<"Hit Contour "<< i<<endl;
+            //cout << "Boid " << b.id<<"Hit Contour "<< i<<endl;
             b.collided_with_contour = true;
             b.vel = math::Vec2f(-1,-1)*(b.vel);
             // Setting to Previous frame location
