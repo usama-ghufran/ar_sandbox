@@ -1,15 +1,13 @@
 #include "ofApp.h"
 
-
 using namespace ofxCv;
 using namespace cv;
-
 
 void ofApp::setup()
 {
 
     // Setup for Collision Detection
-    //obj.nativeContourSetup();
+    obj.nativeContourSetup();
     scene.loadTerrain("terrain.txt");
 
     arguments = ofxArgParser::allKeys();
@@ -149,10 +147,10 @@ void ofApp::update()
     {
         renderer.update();
         sim.frame();
-        /*Contour Setup
+        //Contour Setup
         //obj.processImage();
         obj.nativeContourFind(depthImage);
-        //obj.nativeContourFind();*/
+        //obj.nativeContourFind();
 
 
         vector<Boid>* boids = flockDisplay->getBoidsHandle();
@@ -162,14 +160,14 @@ void ofApp::update()
         {
             float x = (*boids)[i].loc.x*mapRezImg/mapRezSim;
             float y = (*boids)[i].loc.y*mapRezImg/mapRezSim;
-            /* Collision Detection Place holder
+            //Collision Detection and colouring
             obj.boidCollision( (*boids)[i]);
             //obj.boidBBCollision( (*boids)[i]);
              if ((*boids)[i].collided_with_contour){
                 cv::circle(flockImg,cv::Point(x,y),3,green,-1);
               // (*boids)[i].collided_with_contour=false;
             }
-            else*/
+            else
                 cv::circle(flockImg,cv::Point(x,y),3,whiteC3,-1);
         }
 
@@ -203,11 +201,11 @@ void ofApp::draw()
 
     if(calibration.isFinalized() && rendererInited)
     {
-        renderer.drawHueDepthImage();
+        //renderer.drawHueDepthImage();
         flockingImgOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
         depthView.draw(WIN_WIDTH*0.5,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
         // Debug to draw contours
-        //obj.nativeDrawContours();
+        obj.nativeDrawContours();
     }
 
 }
@@ -224,12 +222,12 @@ void ofApp::keyPressed(int key)
         imwrite("data/fakeKinect.bmp",depthImage);
         break;
     case 'T':
-        obj.thresholdVal+=10;
+        obj.thresholdVal+=1;
         thresh+=1;
         cout<<"\nthresh "<<thresh<<endl;
         break;
     case 't':
-        obj.thresholdVal-=10;
+        obj.thresholdVal-=1;
         thresh-=1;
         cout<<"\nthresh "<<thresh<<endl;
         break;
