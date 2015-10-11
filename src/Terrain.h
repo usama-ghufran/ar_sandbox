@@ -21,6 +21,8 @@ public:
     void multMapWithMask(cv::Mat img,cv::Mat mask,cv::Mat& dest);
     cv::Mat* getMasks();
     cv::Mat getTerrain();
+    void combineMapsWithMasks();
+    void combineMapsWithMasks2();
 
 private:
     cv::Mat* depthImage;
