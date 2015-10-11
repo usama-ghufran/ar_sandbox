@@ -844,6 +844,9 @@
 		<Unit filename="icon.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="src/AppConstants.h">
+			<Option virtualFolder="src" />
+		</Unit>
 		<Unit filename="src/Boid.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
@@ -876,9 +879,6 @@
 		</Unit>
 		<Unit filename="src/Vector.h">
 			<Option virtualFolder="src" />
-		</Unit>
-		<Unit filename="src/constants.h">
-		<Option virtualFolder="src" />
 		</Unit>
 		<Unit filename="src/main.cpp">
 			<Option virtualFolder="src" />

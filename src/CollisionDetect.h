@@ -1,8 +1,14 @@
 #pragma once
+#include<iostream>
 #include "Boid.h"
 #include "ofxCv.h"
-#include"ofxCvGrayscaleImage.h"
-#include "constants.h"
+#include "Vector.h"
+#include "ofxCvGrayscaleImage.h"
+#include "ofxCvColorImage.h"
+#include "AppConstants.h"
+
+
+
 class CollisionDetect
 {
 public:

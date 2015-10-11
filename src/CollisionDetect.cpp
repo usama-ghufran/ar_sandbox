@@ -1,10 +1,4 @@
-#include<stdio.h>
-#include "ofxCv.h"
 #include "CollisionDetect.h"
-#include "ofImage.h"
-#include "ofxCvGrayscaleImage.h"
-#include "ofxCvColorImage.h"
-#include "Vector.h"
 
 using namespace cv;
 using namespace ofxCv;
@@ -100,7 +94,7 @@ void CollisionDetect::nativeDrawContours()
     ofEnableAlphaBlending();
     ofxCv::toOf(drawing,outOF);
     outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
-    ofSetColor(255,255,255,150);
+    //ofSetColor(255,255,255,150);
     outOF.update();
 
     //outOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
