@@ -8,7 +8,7 @@ void CollisionDetect::boidCollision(Boid &b)
     for (int i =0; i< contours.size() ; i++)
     {
         // Point polygon test
-        double dist = cv::pointPolygonTest(contours[i],cv:: Point(b.loc.x,b.loc.y), false);
+        double dist = cv::pointPolygonTest(contours[i],cv:: Point(b.loc.x/simRes,b.loc.y/simRes), false);
         int offset = 5;
         if (dist >= 0)
         {
@@ -25,7 +25,7 @@ void CollisionDetect::boidBBCollision(Boid &b)
 {
     for (int i ; i< BBcontours.size(); i++)
     {
-        if (BBcontours[i].contains(cv::Point(b.loc.x,b.loc.y)))
+        if (BBcontours[i].contains(cv::Point(b.loc.x/simRes,b.loc.y/simRes)))
         {
             cout<<"Boid "<<b.id<<" Hit "<<i<<endl;
             b.collided_with_contour=true;
@@ -35,10 +35,12 @@ void CollisionDetect::boidBBCollision(Boid &b)
     }
 }
 
-void CollisionDetect::nativeContourSetup()
+void CollisionDetect::nativeContourSetup(float _simRes)
 {
-    input=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
-    cv::blur(input,input,cv::Size(3,3));
+    //input=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
+    //cv::blur(input,input,cv::Size(3,3));
+    simRes=_simRes;
+
 
 }
 
@@ -53,7 +55,7 @@ void CollisionDetect::nativeContourFind()
     //cout<<"Contours After"<<contours.size()<<endl;
 }
 
-void CollisionDetect::nativeContourFind(cv::Mat depthImg)
+void CollisionDetect::nativeContourFind(cv::Mat& depthImg)
 {
 
     //outOF.allocate(IMG_WIDTH*res,IMG_HEIGHT*res,OF_IMAGE_COLOR);
@@ -70,7 +72,7 @@ void CollisionDetect::nativeContourFind(cv::Mat depthImg)
     vector<cv::Rect> boundRect( contours.size() );
     vector<cv::RotatedRect> rotRect(contours.size());
 
-    for( int i = 0; i< contours.size()        ; i++ )
+    for( int i = 0; i< contours.size(); i++ )
     {
         approxPolyDP( Mat(contours[i]), contours_poly[i], 3, true );
         boundRect[i] = boundingRect( Mat(contours_poly[i]) );
@@ -85,7 +87,7 @@ void CollisionDetect::nativeContourFind(cv::Mat depthImg)
     }
 }
 
-void CollisionDetect::nativeDrawContours()
+void CollisionDetect::nativeDrawContours(int x,int y, int width, int height)
 {
 
     Scalar color = Scalar( 255,0,0 );
@@ -97,11 +99,12 @@ void CollisionDetect::nativeDrawContours()
     //ofEnableAlphaBlending();
     ofxCv::toOf(drawing,outOF);
 
-    //ofSetColor(255,255,255,150);
+
     outOF.update();
 
     //outOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-    outOF.draw(WIN_WIDTH*0.2,WIN_HEIGHT*0.5,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+    //outOF.draw(WIN_WIDTH*0.2,WIN_HEIGHT*0.5,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+    outOF.draw(x,y,width,height);
     drawing = Scalar(0,0,0);
     BBcontours.clear();
 

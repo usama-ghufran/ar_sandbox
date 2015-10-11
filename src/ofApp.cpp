@@ -5,9 +5,17 @@ using namespace cv;
 
 void ofApp::setup()
 {
+    //INIT variables
+    rendererInited = false;
+    writeMask=true;
+    guiHide = false;
+    showContours=false;
+    mapRezSim=3;
+    mapRezImg=3;
+    maskPoints=0;
 
     // Setup for Collision Detection
-    obj.nativeContourSetup();
+    obj.nativeContourSetup(mapRezSim);
 
     scene.loadTerrain("terrain.txt");
     arguments = ofxArgParser::allKeys();
@@ -24,12 +32,7 @@ void ofApp::setup()
     calibration.enableKeys();
     calibration.enableChessboardMouseControl();
 
-    rendererInited = false;
-    writeMask=true;
-    guiHide = false;
-    mapRezSim=3;
-    mapRezImg=3;
-    maskPoints=0;
+
 
     mask=cv::imread("data/mask.bmp",1);
     scene.loadTerrain("terrain.txt",mapRezImg);
@@ -103,7 +106,10 @@ void ofApp::setup()
     terrainControls.add(thresh2.set("Thresh 2",0,0,1));
     terrainControls.loadFromFile("terrain_settings.xml");
 
+
+    showContoursButton.addListener(this,&ofApp::showContoursButtonPressed);
     simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
+    simControls.add(showContoursButton.setup("Display Contours"));
 }
 void ofApp::heightChanged(int& val)
 {
@@ -122,6 +128,15 @@ void ofApp::thresh1Changed(float& val)
 void ofApp::thresh2Changed(float& val)
 {
     scene.setThreshold(2,((max_height-min_height)*val)+min_height);
+}
+void ofApp::showContoursButtonPressed()
+{
+    showContours=!showContours;
+
+    if(showContours)
+            ofSetColor(255,255,255,125);
+    else
+            ofSetColor(255,255,255,255);
 }
 
 void ofApp::update()
@@ -232,10 +247,7 @@ void ofApp::draw()
     {
 
         //renderer.drawHueDepthImage();
-        // Debug to draw contours
-        obj.nativeDrawContours();
-
-        renderer.drawHueDepthImage();
+        //renderer.drawHueDepthImage();
         //Disable depth test after renderer call.
         ofDisableDepthTest();
 
@@ -252,6 +264,14 @@ void ofApp::draw()
             terrainControls.draw();
             simControls.draw();
         }
+
+        if(showContours)
+        {
+            // Debug to draw contours
+            obj.nativeDrawContours(WIN_WIDTH*0.2,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        }
+
+
     }
 }
 

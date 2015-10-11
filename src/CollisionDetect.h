@@ -20,21 +20,21 @@ public:
     ofImage img  ;
     cv::Mat input;
     ofxCvGrayscaleImage cvimg;
-    cv::Mat drawing=cv::Mat(IMG_HEIGHT*res,IMG_WIDTH*res,CV_8UC3,cv::Scalar(0,0,0));
+    cv::Mat drawing=cv::Mat(IMG_HEIGHT,IMG_WIDTH,CV_8UC3,cv::Scalar(0,0,0));
     ofImage outOF;
     vector<vector<cv::Point> > contours;
     vector<cv::Rect> BBcontours;
-
+    float simRes;
     /* public member functions*/
     void processImage();
 
     void boidCollision(Boid &b);
     void boidBBCollision(Boid &b);
 
-    void nativeContourSetup();
+    void nativeContourSetup(float);
     void nativeContourFind();
-    void nativeContourFind(cv::Mat);
-    void nativeDrawContours();
+    void nativeContourFind(cv::Mat&);
+    void nativeDrawContours(int x,int y, int width, int height);
 
 };
 

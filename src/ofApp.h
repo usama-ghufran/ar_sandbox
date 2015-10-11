@@ -28,6 +28,7 @@ public:
     void thresh0Changed(float& val);
     void thresh1Changed(float& val);
     void thresh2Changed(float& val);
+    void showContoursButtonPressed();
 
 	ofxKinect depthcam;
 	ofxReprojectionCalibration calibration;
@@ -39,6 +40,7 @@ public:
     bool fakeKinect;
     bool writeMask;
     bool guiHide;
+    bool showContours;
     float mapRezSim;
     float mapRezImg;
 	int maskPoints;
@@ -66,12 +68,13 @@ public:
 
 	//GUI
 	ofxPanel terrainControls;
-	ofxPanel simControls;
 	ofParameter<int> max_height;
 	ofParameter<int> min_height;
 	ofParameter<float> thresh0;
 	ofParameter<float> thresh1;
 	ofParameter<float> thresh2;
+    ofxPanel simControls;
+    ofxButton showContoursButton;
 
 	//DEBUG
 	cv::Mat* threshMask;
