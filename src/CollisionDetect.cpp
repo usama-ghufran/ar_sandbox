@@ -39,6 +39,8 @@ void CollisionDetect::nativeContourSetup()
 {
     input=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
     cv::blur(input,input,cv::Size(3,3));
+    outOF.allocate(IMG_WIDTH*res,IMG_HEIGHT*res,OF_IMAGE_COLOR);
+    outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
 }
 
 
@@ -89,16 +91,15 @@ void CollisionDetect::nativeDrawContours()
     {
         cv::drawContours( drawing, contours, i, color, 2, 8, vector<Vec4i>(),0, cv::Point() );
     }
-    ofImage outOF;
-    outOF.allocate(IMG_WIDTH*res,IMG_HEIGHT*res,OF_IMAGE_COLOR);
-    ofEnableAlphaBlending();
+
+    //ofEnableAlphaBlending();
     ofxCv::toOf(drawing,outOF);
-    outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
+
     //ofSetColor(255,255,255,150);
     outOF.update();
 
     //outOF.draw(0,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
-    outOF.draw(WIN_WIDTH*0.2,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+    outOF.draw(WIN_WIDTH*0.2,WIN_HEIGHT*0.5,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
     drawing = Scalar(0,0,0);
     BBcontours.clear();
 

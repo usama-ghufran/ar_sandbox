@@ -88,7 +88,7 @@ void Terrain::processScene()
     multMapWithMask(grass,mask[1],composite);
     multMapWithMask(rock_snow,mask[0],composite);
 
-    //combineMapsWithMasks(composite,);
+    //combineMapsWithMasks(composite,rock_snow,grass,water,pebble,);
 
 
 

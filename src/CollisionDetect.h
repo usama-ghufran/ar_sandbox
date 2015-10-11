@@ -21,7 +21,7 @@ public:
     cv::Mat input;
     ofxCvGrayscaleImage cvimg;
     cv::Mat drawing=cv::Mat(IMG_HEIGHT*res,IMG_WIDTH*res,CV_8UC3,cv::Scalar(0,0,0));
-
+    ofImage outOF;
     vector<vector<cv::Point> > contours;
     vector<cv::Rect> BBcontours;
 
