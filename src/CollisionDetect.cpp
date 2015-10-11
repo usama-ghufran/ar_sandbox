@@ -39,8 +39,7 @@ void CollisionDetect::nativeContourSetup()
 {
     input=cv::imread("data/fakeKinect.bmp",CV_LOAD_IMAGE_GRAYSCALE);
     cv::blur(input,input,cv::Size(3,3));
-    outOF.allocate(IMG_WIDTH*res,IMG_HEIGHT*res,OF_IMAGE_COLOR);
-    outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
+
 }
 
 
@@ -56,6 +55,9 @@ void CollisionDetect::nativeContourFind()
 
 void CollisionDetect::nativeContourFind(cv::Mat depthImg)
 {
+
+    //outOF.allocate(IMG_WIDTH*res,IMG_HEIGHT*res,OF_IMAGE_COLOR);
+    //outOF.setImageType(OF_IMAGE_COLOR_ALPHA);
     Mat threshold_output;
     vector<Vec4i> hierarchy;
     Scalar color = Scalar( 255,255,0 );

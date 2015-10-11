@@ -31,7 +31,7 @@ private:
     cv::Mat pebble;
     cv::Mat composite;
     cv::Mat mask[4];
-    //cv::Mat* textures[4];
+    cv::Mat* textures[4];
     int thresh[3];
     float mapRez;
 

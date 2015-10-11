@@ -25,6 +25,10 @@ void Terrain::loadTerrain(string filename,float mapRezImg)
     for(int i=0;i<=3;i++)
         mask[i]=cv::Mat(480,640,CV_8UC3,cv::Scalar(0,0,0));
 
+    textures[0]=&rock_snow;
+    textures[1]=&grass;
+    textures[2]=&water;
+    textures[3]=&pebble;
 }
 
 void Terrain::setDepthImage(cv::Mat* _depthImage)
@@ -50,6 +54,10 @@ void Terrain::applyThreshold()
     cv::threshold(*depthImage,mask[3],thresh[3-1],255,1);
 }
 
+void Terrain::combineMapsWithMasks(cv::Mat& out,cv::Mat** img,cv::Mat* matt)
+{
+
+}
 
 
 void Terrain::multMapWithMask(cv::Mat img, cv::Mat mask, cv::Mat& dest)//very slow function. Don't use.
@@ -88,7 +96,7 @@ void Terrain::processScene()
     multMapWithMask(grass,mask[1],composite);
     multMapWithMask(rock_snow,mask[0],composite);
 
-    //combineMapsWithMasks(composite,rock_snow,grass,water,pebble,);
+    combineMapsWithMasks(composite,textures,mask);
 
 
 
