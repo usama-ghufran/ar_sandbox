@@ -105,21 +105,21 @@ void ofApp::setup()
     sim.loadScene(50,50,640*2,480*2,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
         100 		,//fish count
-        0.1 		,//destination Weight
-        0 			,//rand seed
-        0.00		,//sleep time
+        destWeight 		,//destination Weight
+        randSeed 			,//rand seed
+        sleepTime		,//sleep time
         10 	        ,//boundary padding
-        2			,//max speed
-        1 			,//max force
-        1 	        ,//flock separation weight
-        0.5 	    ,//flock alignment weight
-        0.25 	    ,//flock cohesion weight
+        maxSpeed			,//max speed
+        maxForce 			,//max force
+        flockSeparationWeight 	        ,//flock separation weight
+        flockAlignmentWeight 	    ,//flock alignment weight
+        flockCohesionWeight 	    ,//flock cohesion weight
         0 	        ,//collision weight
-        15 	        ,//flock separation radius
-        20 	        ,//flock alignment radius
-        20		    ,//flock cohesion radius
-        50		    ,//start position radius
-        50            //end position radius
+        flockSeparationRadius 	        ,//flock separation radius
+        flockAlignmentRadius 	        ,//flock alignment radius
+        flockCohesionRadius		    ,//flock cohesion radius
+        startRadius		    ,//start position radius
+        endRadius            //end position radius
     );
 
     flockDisplay = sim.getFlockHandle();
@@ -136,9 +136,9 @@ void ofApp::setup()
 
     int scale=5;
 
-    trianglePts[0] = cv::Point(scale*2,0);
-    trianglePts[1] = cv::Point(-scale,-scale);
-    trianglePts[2] = cv::Point(-scale,scale);
+    trianglePts[0] = cv::Point(scale*2-scale*0.5,0);
+    trianglePts[1] = cv::Point(-scale-scale*0.5,-scale);
+    trianglePts[2] = cv::Point(-scale-scale*0.5,scale);
 
 }
 void ofApp::heightChanged(int& val)
