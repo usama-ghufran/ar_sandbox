@@ -34,13 +34,13 @@ void ofApp::setup()
 
 
 
-    mask=cv::imread("data/mask.bmp",1);
-    scene.loadTerrain("terrain.txt",mapRezImg);
-    flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
-    projectImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+    mask=cv::imread("data/mask.bmp",CV_LOAD_IMAGE_GRAYSCALE);
+    if(!mask.data)
+        mask = cv::Mat(IMG_HEIGHT,IMG_WIDTH,CV_8UC1,cv::Scalar(0));
 
-    //flockingImgOF.allocate(IMG_WIDTH*mapRezImg,IMG_HEIGHT*mapRezImg,OF_IMAGE_COLOR);
-    //depthView.allocate(KINECT_WIDTH,KINECT_HEIGHT,OF_IMAGE_GRAYSCALE);
+    scene.loadTerrain("terrain.txt",mapRezImg);
+    //flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+    projectImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
 
     if(fakeKinect)
     {
@@ -51,8 +51,6 @@ void ofApp::setup()
     else
         depthImage=cv::Mat(KINECT_HEIGHT,KINECT_WIDTH,CV_8UC1,cv::Scalar(0));
 
-    if(!mask.data)
-        mask = cv::Mat(IMG_HEIGHT,IMG_WIDTH,CV_8UC1,cv::Scalar(0));
 
     //Parse Args
     for (int i = 0; i < arguments.size(); i++)
@@ -70,10 +68,10 @@ void ofApp::setup()
         calibration.finalize();
     }
 
-    sim.loadScene(50,50,100,100,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
+    sim.loadScene(50,50,640*2,480*2,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
         100 		,//fish count
-        0.01 		,//destination Weight
+        0.1 		,//destination Weight
         0 			,//rand seed
         0.00		,//sleep time
         10 	        ,//boundary padding
@@ -87,10 +85,11 @@ void ofApp::setup()
         20 	        ,//flock alignment radius
         20		    ,//flock cohesion radius
         50		    ,//start position radius
-        0            //end position radius
+        50            //end position radius
     );
 
     flockDisplay = sim.getFlockHandle();
+    boids = flockDisplay->getBoidsHandle();
 
     max_height.addListener(this,&ofApp::heightChanged);
     min_height.addListener(this,&ofApp::heightChanged);
@@ -110,6 +109,14 @@ void ofApp::setup()
     showContoursButton.addListener(this,&ofApp::showContoursButtonPressed);
     simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
     simControls.add(showContoursButton.setup("Display Contours"));
+
+    for(int i=0; i<boids->size(); i++)
+    {
+        while(obj.maskCollision((*boids)[i],mask,true))
+        {
+            //keep moving the boids till when they are out of mask.
+        }
+    }
 }
 void ofApp::heightChanged(int& val)
 {
@@ -147,10 +154,13 @@ void ofApp::update()
     if(!fakeKinect)
         depthImage.data=depthcam.getDepthPixels();
 
+    cv::multiply(depthImage,mask,depthImage,1/255.0);
+
     cv::Scalar whiteC1(255);
     cv::Scalar whiteC3(255,255,255);
     cv::Scalar black(0);
     cv::Scalar green(0,255,0);
+    cv::Scalar yellow(255,255,0,125);
 
     if(!calibration.isFinalized())
     {
@@ -183,8 +193,6 @@ void ofApp::update()
         obj.nativeContourFind(depthImage);
         //obj.nativeContourFind();
 
-        vector<Boid>* boids = flockDisplay->getBoidsHandle();
-
         projectImg = scene.getTerrain();
         cv::cvtColor(projectImg,projectImgRGB,CV_RGB2BGR);
 
@@ -196,8 +204,9 @@ void ofApp::update()
             float y = (*boids)[i].loc.y*mapRezImg/mapRezSim;
 
             //Collision Detection and colouring
-
             obj.boidCollision( (*boids)[i]);
+            obj.maskCollision((*boids)[i],mask,false);
+
             //obj.boidBBCollision( (*boids)[i]);
              if ((*boids)[i].collided_with_contour){
                 cv::circle(projectImgRGB,cv::Point(x,y),5,green,-1);
@@ -209,6 +218,9 @@ void ofApp::update()
                 //cv::circle(flockImg,cv::Point(x,y),3,whiteC3,-1);
 
         }
+
+        //Destination
+        cv::circle(projectImgRGB,cv::Point((640*2/mapRezSim)*mapRezImg,(480*2/mapRezSim)*mapRezImg),50,yellow,3);
 
         ofxCv::toOf(projectImgRGB,projectImgOF);
         projectImgOF.update();
@@ -291,15 +303,11 @@ void ofApp::keyPressed(int key)
         break;
     case 't':
         obj.thresholdVal-=1;
-    case 's':
-        if(calibration.isFinalized() && rendererInited)
-        {
-            terrainControls.saveToFile("control_settings.xml");
-        }
         break;
-
     case 'h':
         guiHide=!guiHide;
+        break;
+
     }
 }
 

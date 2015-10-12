@@ -47,6 +47,7 @@ public:
 
 	Simulation sim;
 	Flocking* flockDisplay;
+	vector<Boid>* boids;
 	CollisionDetect obj;
 	Terrain scene;
 
@@ -55,16 +56,13 @@ public:
 
 	cv::Mat mask;
 	cv::Mat depthImage;
-	cv::Mat flockImg;
-    cv::Mat projectImg;
+	cv::Mat projectImg;
     cv::Mat projectImgRGB;
 
     cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
 
     ofImage projectImgOF;
-	ofImage flockingImgOF;
-	ofImage depthImageOF;
 
 	//GUI
 	ofxPanel terrainControls;

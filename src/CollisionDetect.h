@@ -30,7 +30,7 @@ public:
 
     void boidCollision(Boid &b);
     void boidBBCollision(Boid &b);
-
+    bool maskCollision(Boid &b,cv::Mat& mask,bool resetPos);
     void nativeContourSetup(float);
     void nativeContourFind();
     void nativeContourFind(cv::Mat&);

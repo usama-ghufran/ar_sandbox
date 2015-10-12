@@ -74,17 +74,17 @@ void Terrain::combineMapsWithMasks()
 
         for(int j = 0; j < composite.cols; j++)
         {
-            if(m0[j/mres]==255)
-                comp[j]=t0[j];
-
-            else if(m1[j/mres]==255)
-                comp[j]=t1[j];
+            if(m3[j/mres]==255)
+                comp[j]=t3[j];
 
             else if(m2[j/mres]==255)
                 comp[j]=t2[j];
 
-            else if(m3[j/mres]==255)
-                comp[j]=t3[j];
+            else if(m1[j/mres]==255)
+                comp[j]=t1[j];
+
+            else if(m0[j/mres]==255)
+                comp[j]=t0[j];
         }
     }
 }

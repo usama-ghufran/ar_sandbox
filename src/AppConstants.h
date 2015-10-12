@@ -8,5 +8,3 @@
 
 #define KINECT_WIDTH 640
 #define KINECT_HEIGHT 480
-
-#define res 3

@@ -21,6 +21,39 @@ void CollisionDetect::boidCollision(Boid &b)
     }
 }
 
+bool CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
+{
+    float x = b.loc.x/simRes;
+    float y = b.loc.y/simRes;
+    if(mask.at<uchar>(cv::Point(x,y))==0)
+    {
+        if(resetPos)
+        {
+            if(x<mask.cols/2)
+                b.loc.x+=1;
+            else
+                b.loc.x-=1;
+
+            if(y<mask.rows/2)
+                b.loc.y+=1;
+            else
+                b.loc.y-=1;
+        }
+        else
+        {
+            b.collided_with_contour = true;
+            b.vel = math::Vec2f(-1,-1)*(b.vel);
+            // Setting to Previous frame location
+            b.loc =b.prev_loc;
+        }
+
+        return true;
+    }
+    else
+        return false;
+
+}
+
 void CollisionDetect::boidBBCollision(Boid &b)
 {
     for (int i ; i< BBcontours.size(); i++)
@@ -67,10 +100,12 @@ void CollisionDetect::nativeContourFind(cv::Mat& depthImg)
     cv::threshold( depthImg, threshold_output, thresholdVal, 255, THRESH_BINARY );
     findContours( threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0) );
 
+     /*
     // Place holders for Bounding Box, ellipse
     vector<vector<cv::Point> > contours_poly( contours.size() );
     vector<cv::Rect> boundRect( contours.size() );
     vector<cv::RotatedRect> rotRect(contours.size());
+
 
     for( int i = 0; i< contours.size(); i++ )
     {
@@ -78,13 +113,16 @@ void CollisionDetect::nativeContourFind(cv::Mat& depthImg)
         boundRect[i] = boundingRect( Mat(contours_poly[i]) );
         BBcontours.push_back(boundRect[i]);
 
+
         if (contours[i].size()>5)
         {
             rotRect[i] = cv::fitEllipse(Mat (contours[i]));
             ellipse(drawing,rotRect[i],color, 2,8);
         }
+
         //cv::rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
     }
+    */
 }
 
 void CollisionDetect::nativeDrawContours(int x,int y, int width, int height)
