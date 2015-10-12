@@ -68,6 +68,40 @@ void ofApp::setup()
         calibration.finalize();
     }
 
+
+
+    max_height.addListener(this,&ofApp::heightChanged);
+    min_height.addListener(this,&ofApp::heightChanged);
+    thresh0.addListener(this,&ofApp::thresh0Changed);
+    thresh1.addListener(this,&ofApp::thresh1Changed);
+    thresh2.addListener(this,&ofApp::thresh2Changed);
+
+    terrainControls.setup("Terrain Controls","terrain_settings.xml",10,10);
+    terrainControls.add(max_height.set("Max Height",240,0,255));
+    terrainControls.add(min_height.set("Min Height",170,0,255));
+    terrainControls.add(thresh0.set("Thresh 0",0.9,0,1));
+    terrainControls.add(thresh1.set("Thresh 1",0.75,0,1));
+    terrainControls.add(thresh2.set("Thresh 2",0,0,1));
+    terrainControls.loadFromFile("terrain_settings.xml");
+
+    showContoursButton.addListener(this,&ofApp::showContoursButtonPressed);
+    simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
+    simControls.add(showContoursButton.setup("Display Contours"));
+    simControls.add(maxSpeed.set("Max Speed",2,0,5));
+    simControls.add(maxForce.set("Max Force",1,0,5));
+    simControls.add(destWeight.set("Goal Weight",0.1,0,1));
+    simControls.add(flockSeparationWeight.set("Separation Weight",1,0,2));
+    simControls.add(flockAlignmentWeight.set("Alignment Weight",0.5,0,2));
+    simControls.add(flockCohesionWeight.set("Cohesion Weight",0.25,0,2));
+    simControls.add(flockSeparationRadius.set("Separation Radius",15,0,50));
+    simControls.add(flockAlignmentRadius.set("Alignment Radius",20,0,50));
+    simControls.add(flockCohesionRadius.set("Cohesion Radius",20,0,50));
+    simControls.add(startRadius.set("Start Radius",50,0,200));
+    simControls.add(endRadius.set("End Radius",50,0,200));
+    simControls.add(sleepTime.set("Sim Sleep Time",0,0,0.1));
+    simControls.add(randSeed.set("Random Seed",0,0,1));
+    simControls.loadFromFile("simulation_settings.xml");
+
     sim.loadScene(50,50,640*2,480*2,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
         100 		,//fish count
@@ -91,24 +125,6 @@ void ofApp::setup()
     flockDisplay = sim.getFlockHandle();
     boids = flockDisplay->getBoidsHandle();
 
-    max_height.addListener(this,&ofApp::heightChanged);
-    min_height.addListener(this,&ofApp::heightChanged);
-    thresh0.addListener(this,&ofApp::thresh0Changed);
-    thresh1.addListener(this,&ofApp::thresh1Changed);
-    thresh2.addListener(this,&ofApp::thresh2Changed);
-
-    terrainControls.setup("Terrain Controls","terrain_settings.xml",10,10);
-    terrainControls.add(max_height.set("Max Height",240,0,255));
-    terrainControls.add(min_height.set("Min Height",170,0,255));
-    terrainControls.add(thresh0.set("Thresh 0",0.9,0,1));
-    terrainControls.add(thresh1.set("Thresh 1",0.75,0,1));
-    terrainControls.add(thresh2.set("Thresh 2",0,0,1));
-    terrainControls.loadFromFile("terrain_settings.xml");
-
-
-    showContoursButton.addListener(this,&ofApp::showContoursButtonPressed);
-    simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
-    simControls.add(showContoursButton.setup("Display Contours"));
 
     for(int i=0; i<boids->size(); i++)
     {
@@ -209,7 +225,7 @@ void ofApp::update()
             obj.boidCollision( (*boids)[i]);
             obj.maskCollision((*boids)[i],mask,false);
             cv::Point boidPts[3];
-            float angle=(*boids)[i].orient/180*PI;
+            float angle=(*boids)[i].orient/180.0*PI;
 
             for(int i=0;i<3;i++)
             {

@@ -71,8 +71,23 @@ public:
 	ofParameter<float> thresh0;
 	ofParameter<float> thresh1;
 	ofParameter<float> thresh2;
+    
     ofxPanel simControls;
     ofxButton showContoursButton;
+    ofParameter<float> maxSpeed;
+	ofParameter<float> maxForce;
+	ofParameter<float> destWeight;
+	ofParameter<float> flockSeparationWeight;
+	ofParameter<float> flockAlignmentWeight;
+	ofParameter<float> flockCohesionWeight;
+	ofParameter<float> flockSeparationRadius;
+	ofParameter<float> flockAlignmentRadius;
+	ofParameter<float> flockCohesionRadius;
+	ofParameter<float> startRadius;
+	ofParameter<float> endRadius;
+    ofParameter<float> sleepTime;
+    ofParameter<float> randSeed;
+
 
 	//DEBUG
 	cv::Mat* threshMask;
