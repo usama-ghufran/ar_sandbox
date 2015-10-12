@@ -61,7 +61,7 @@ public:
 
     cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
-
+    cv::Point trianglePts[3];
     ofImage projectImgOF;
 
 	//GUI

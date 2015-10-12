@@ -117,6 +117,13 @@ void ofApp::setup()
             //keep moving the boids till when they are out of mask.
         }
     }
+
+    int scale=5;
+
+    trianglePts[0] = cv::Point(scale*2,0);
+    trianglePts[1] = cv::Point(-scale,-scale);
+    trianglePts[2] = cv::Point(-scale,scale);
+
 }
 void ofApp::heightChanged(int& val)
 {
@@ -160,7 +167,7 @@ void ofApp::update()
     cv::Scalar whiteC3(255,255,255);
     cv::Scalar black(0);
     cv::Scalar green(0,255,0);
-    cv::Scalar yellow(255,255,0,125);
+    cv::Scalar yellow(255,255,0);
 
     if(!calibration.isFinalized())
     {
@@ -188,15 +195,10 @@ void ofApp::update()
         renderer.update();
         sim.frame();
 
-        //Contour Setup
-        //obj.processImage();
         obj.nativeContourFind(depthImage);
-        //obj.nativeContourFind();
 
         projectImg = scene.getTerrain();
         cv::cvtColor(projectImg,projectImgRGB,CV_RGB2BGR);
-
-
 
         for(int i=0; i<boids->size(); i++)
         {
@@ -206,18 +208,31 @@ void ofApp::update()
             //Collision Detection and colouring
             obj.boidCollision( (*boids)[i]);
             obj.maskCollision((*boids)[i],mask,false);
+            cv::Point boidPts[3];
+            float angle=(*boids)[i].orient/180*PI;
+
+            for(int i=0;i<3;i++)
+            {
+                boidPts[i].x=trianglePts[i].x*cos(angle)-trianglePts[i].y*sin(angle);
+                boidPts[i].y=trianglePts[i].y*cos(angle)+trianglePts[i].x*sin(angle);
+                boidPts[i]+=cv::Point(x,y);
+            }
 
             //obj.boidBBCollision( (*boids)[i]);
              if ((*boids)[i].collided_with_contour){
-                cv::circle(projectImgRGB,cv::Point(x,y),5,green,-1);
+                //cv::circle(projectImgRGB,cv::Point(x,y),5,green,-1);
+
+
+                cv::fillConvexPoly(projectImgRGB,boidPts,3,whiteC3);
                 //cv::circle(flockImg,cv::Point(x,y),3,green,-1);
               // (*boids)[i].collided_with_contour=false;
             }
             else
-                cv::circle(projectImgRGB,cv::Point(x,y),5,whiteC3,-1);
-                //cv::circle(flockImg,cv::Point(x,y),3,whiteC3,-1);
+                //cv::circle(projectImgRGB,cv::Point(x,y),5,whiteC3,-1);
+                cv::fillConvexPoly(projectImgRGB,boidPts,3,whiteC3);
 
         }
+
 
         //Destination
         cv::circle(projectImgRGB,cv::Point((640*2/mapRezSim)*mapRezImg,(480*2/mapRezSim)*mapRezImg),50,yellow,3);
