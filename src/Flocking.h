@@ -12,12 +12,17 @@ public:
     void setBounds(int xbound, int ybound);
     int flockSize();
     void setDestination(int x, int y,float area);
+    void setDestination(int x, int y);
     void setDestination(Vec2f dest,float area);
-
+    void setDestination(Vec2f dest);
+    void setStart(Vec2f _startPos);
+    void setStart(Vec2f _startPos,float area);
     void useCollisionSDF(bool val);
     vector<Boid>* getBoidsHandle();
     Vec2f** calculatePartialDerivaties();
     void draw();
+
+    void updateSimParams();
 
     void setSimulationParameters(
     		int 	mboundaryPadding 	,
@@ -39,7 +44,8 @@ public:
     Vec2f destination;
     float destinationArea;
     Vec2f destinationSeek;
-
+    Vec2f startPos;
+    float startArea;
     bool useCollisionFromSDF;
     float** collisionSDF;
     Vec2f** partialDerivaties;

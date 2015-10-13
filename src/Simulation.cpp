@@ -97,7 +97,54 @@ Simulation::init(
 
 }
 
+void Simulation::updateSimParams(
 
+				float 	mdestWeight 		,
+				int 	mrandSeed 			,
+				float	msleepTime			,
+              	int 	mboundaryPadding 	,
+              	float 	mmaxSpeed 			,
+              	float 	mmaxForce 			,
+           		float 	mflockSepWeight 	,
+           		float 	mflockAliWeight 	,
+           		float 	mflockCohWeight 	,
+           		float 	mcollisionWeight 	,
+           		float 	mflockSepRadius 	,
+           		float 	mflockAliRadius 	,
+           		float 	mflockCohRadius 	,
+				float	mstartPosRad		,
+				float	mendPosRad)
+{
+    sleepTime			= msleepTime		;
+  	boundaryPadding 	= mboundaryPadding	;
+  	maxSpeed 			= mmaxSpeed 		;
+  	maxForce 			= mmaxForce 		;
+	flockSepWeight 		= mflockSepWeight 	;
+	flockAliWeight 		= mflockAliWeight 	;
+	flockCohWeight 		= mflockCohWeight 	;
+    collisionWeight 	= mcollisionWeight	;
+	flockSepRadius 		= mflockSepRadius 	;
+	flockAliRadius 		= mflockAliRadius 	;
+	flockCohRadius 		= mflockCohRadius 	;
+    destWeight 			= mdestWeight 		;
+    randSeed 			= mrandSeed 		;
+	startPositionRadius	= mstartPosRad		;
+	endPositionRadius	= mendPosRad		;
+
+	flock.setSimulationParameters(boundaryPadding	,
+      			maxSpeed 		,
+  				maxForce 		,
+				flockSepWeight 	,
+				flockAliWeight 	,
+				flockCohWeight 	,
+    			collisionWeight ,
+				flockSepRadius 	,
+				flockAliRadius 	,
+				flockCohRadius 	,
+    			destWeight		);
+
+    flock.updateSimParams();
+}
 
 void
 Simulation::run()
@@ -111,6 +158,29 @@ Simulation::run()
 
 }
 
+void Simulation::setDestination(int x, int y)
+{
+    endPosition.setval(x,y);
+    flock.setDestination(endPosition);
+}
+
+void Simulation::setDestination(int x, int y,float radius)
+{
+    endPosition.setval(x,y);
+    flock.setDestination(endPosition,radius);
+}
+
+void Simulation::setStart(int x, int y)
+{
+    startPosition.setval(x,y);
+    flock.setStart(startPosition);
+}
+
+void Simulation::setStart(int x, int y,float radius)
+{
+    startPosition.setval(x,y);
+    flock.setStart(startPosition,radius);
+}
 
 Flocking* Simulation::getFlockHandle()
 {

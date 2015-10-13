@@ -11,8 +11,13 @@ void ofApp::setup()
     guiHide = false;
     showContours=false;
     mapRezSim=3;
-    mapRezImg=3;
+    mapRezImg=1;
     maskPoints=0;
+    fishCount=100;
+    boundaryPadding=10;
+    collisionWeight=0;
+    startPosx=startPosy=100;
+    endPosx=endPosy=IMG_HEIGHT*mapRezSim*0.8;
 
     // Setup for Collision Detection
     obj.nativeContourSetup(mapRezSim);
@@ -102,24 +107,39 @@ void ofApp::setup()
     simControls.add(randSeed.set("Random Seed",0,0,1));
     simControls.loadFromFile("simulation_settings.xml");
 
-    sim.loadScene(50,50,640*2,480*2,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
+
+    destWeight.addListener(this,&ofApp::simParamChanged);
+    randSeed.addListener(this,&ofApp::simParamChanged);
+    sleepTime.addListener(this,&ofApp::simParamChanged);
+    maxSpeed.addListener(this,&ofApp::simParamChanged);
+    maxForce.addListener(this,&ofApp::simParamChanged);
+    flockSeparationWeight.addListener(this,&ofApp::simParamChanged);
+    flockAlignmentWeight.addListener(this,&ofApp::simParamChanged);
+    flockCohesionWeight.addListener(this,&ofApp::simParamChanged);
+    flockSeparationRadius.addListener(this,&ofApp::simParamChanged);
+    flockAlignmentRadius.addListener(this,&ofApp::simParamChanged);
+    flockCohesionRadius.addListener(this,&ofApp::simParamChanged);
+    startRadius.addListener(this,&ofApp::simParamStartRadiusChanged);
+    endRadius.addListener(this,&ofApp::simParamEndRadiusChanged);
+
+    sim.loadScene(startPosx,startPosy,endPosx,endPosy,IMG_WIDTH*mapRezSim,IMG_HEIGHT*mapRezSim);
     sim.init(
-        100 		,//fish count
-        destWeight 		,//destination Weight
-        randSeed 			,//rand seed
-        sleepTime		,//sleep time
-        10 	        ,//boundary padding
-        maxSpeed			,//max speed
-        maxForce 			,//max force
-        flockSeparationWeight 	        ,//flock separation weight
+        fishCount 		            ,//fish count
+        destWeight 		            ,//destination Weight
+        randSeed 		            ,//rand seed
+        sleepTime		            ,//sleep time
+        boundaryPadding 	        ,//boundary padding
+        maxSpeed			        ,//max speed
+        maxForce 			        ,//max force
+        flockSeparationWeight 	    ,//flock separation weight
         flockAlignmentWeight 	    ,//flock alignment weight
         flockCohesionWeight 	    ,//flock cohesion weight
-        0 	        ,//collision weight
-        flockSeparationRadius 	        ,//flock separation radius
-        flockAlignmentRadius 	        ,//flock alignment radius
+        collisionWeight 	        ,//collision weight
+        flockSeparationRadius 	    ,//flock separation radius
+        flockAlignmentRadius 	    ,//flock alignment radius
         flockCohesionRadius		    ,//flock cohesion radius
-        startRadius		    ,//start position radius
-        endRadius            //end position radius
+        startRadius		            ,//start position radius
+        endRadius                    //end position radius
     );
 
     flockDisplay = sim.getFlockHandle();
@@ -128,13 +148,13 @@ void ofApp::setup()
 
     for(int i=0; i<boids->size(); i++)
     {
-        while(obj.maskCollision((*boids)[i],mask,true))
+        while(obj.maskCollision((*boids)[i],mask,true)==2)
         {
             //keep moving the boids till when they are out of mask.
         }
     }
 
-    int scale=5;
+    int scale=2;
 
     trianglePts[0] = cv::Point(scale*2-scale*0.5,0);
     trianglePts[1] = cv::Point(-scale-scale*0.5,-scale);
@@ -168,6 +188,33 @@ void ofApp::showContoursButtonPressed()
     else
             ofSetColor(255,255,255,255);
 }
+void ofApp::simParamChanged(float& val)
+{
+    sim.updateSimParams(
+        destWeight 		            ,//destination Weight
+        randSeed 		            ,//rand seed
+        sleepTime		            ,//sleep time
+        boundaryPadding 	        ,//boundary padding
+        maxSpeed			        ,//max speed
+        maxForce 			        ,//max force
+        flockSeparationWeight 	    ,//flock separation weight
+        flockAlignmentWeight 	    ,//flock alignment weight
+        flockCohesionWeight 	    ,//flock cohesion weight
+        collisionWeight 	            ,//collision weight
+        flockSeparationRadius 	    ,//flock separation radius
+        flockAlignmentRadius 	    ,//flock alignment radius
+        flockCohesionRadius		    ,//flock cohesion radius
+        startRadius		            ,//start position radius
+        endRadius                   ); //end position radius);
+}
+void ofApp::simParamStartRadiusChanged(float& val)
+{
+    sim.setStart(startPosx,startPosy,startRadius);
+}
+void ofApp::simParamEndRadiusChanged(float& val)
+{
+    sim.setDestination(endPosx,endPosy,endRadius);
+}
 
 void ofApp::update()
 {
@@ -184,6 +231,7 @@ void ofApp::update()
     cv::Scalar black(0);
     cv::Scalar green(0,255,0);
     cv::Scalar yellow(255,255,0);
+    cv::Scalar blue(0,0,255);
 
     if(!calibration.isFinalized())
     {
@@ -197,7 +245,7 @@ void ofApp::update()
         }
     }
 
-    if(calibration.isFinalized() && !rendererInited)
+    else if(calibration.isFinalized() && !rendererInited)
     {
         renderer.init(&depthcam);
         renderer.setDrawArea(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
@@ -206,7 +254,7 @@ void ofApp::update()
         scene.setDepthImage(&depthImage);
     }
 
-    if(calibration.isFinalized() && rendererInited)
+    else if(calibration.isFinalized() && rendererInited)
     {
         renderer.update();
         sim.frame();
@@ -223,7 +271,16 @@ void ofApp::update()
 
             //Collision Detection and colouring
             obj.boidCollision( (*boids)[i]);
-            obj.maskCollision((*boids)[i],mask,false);
+            if(obj.maskCollision((*boids)[i],mask,false)==1)
+            {
+                if(obj.maskCollision((*boids)[i],mask,false)!=0)
+                {
+                    while(obj.maskCollision((*boids)[i],mask,true)==2)
+                    {
+                        //keep moving the boids till when they are out of mask.
+                    }
+                }
+            }
             cv::Point boidPts[3];
             float angle=(*boids)[i].orient/180.0*PI;
 
@@ -249,9 +306,10 @@ void ofApp::update()
 
         }
 
-
+        //Start
+        cv::circle(projectImgRGB,cv::Point((startPosx/mapRezSim)*mapRezImg,(startPosy/mapRezSim)*mapRezImg),startRadius,blue,5);
         //Destination
-        cv::circle(projectImgRGB,cv::Point((640*2/mapRezSim)*mapRezImg,(480*2/mapRezSim)*mapRezImg),50,yellow,3);
+        cv::circle(projectImgRGB,cv::Point((endPosx/mapRezSim)*mapRezImg,(endPosy/mapRezSim)*mapRezImg),endRadius,yellow,5);
 
         ofxCv::toOf(projectImgRGB,projectImgOF);
         projectImgOF.update();
@@ -272,7 +330,7 @@ void ofApp::draw()
 {
     if(!calibration.isFinalized())
     {
-        calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT);
+        calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT-50);
         calibration.drawChessboard(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
 
         //Draw Mask Points;
@@ -286,10 +344,10 @@ void ofApp::draw()
         ofSetColor(255,255,255);
     }
 
-    if(calibration.isFinalized() && rendererInited)
+    else if(calibration.isFinalized() && rendererInited)
     {
 
-        //renderer.drawHueDepthImage();
+        renderer.drawImage(projectImgOF);
         //renderer.drawHueDepthImage();
         //Disable depth test after renderer call.
         ofDisableDepthTest();
@@ -344,10 +402,10 @@ void ofApp::keyPressed(int key)
 
 void ofApp::mousePressed(int x, int y, int button)
 {
-
+    cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
     if(!calibration.isFinalized())
     {
-        //cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
+
 
         if(maskPoints>=4)
         {
@@ -358,6 +416,22 @@ void ofApp::mousePressed(int x, int y, int button)
         drawkinectMask[maskPoints]=cv::Point(x,y);
         maskPoints++;
     }
+    else if(calibration.isFinalized() && rendererInited)
+    {
+        if(button==0)
+        {
+            startPosx=x;
+            startPosy=y;
+            sim.setStart(startPosx,startPosy);
+        }
+        else if(button==2)
+        {
+            endPosx=x;
+            endPosy=y;
+            sim.setDestination(endPosx,endPosy);
+        }
+    }
+
 }
 
 void ofApp::exit()

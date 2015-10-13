@@ -29,6 +29,9 @@ public:
     void thresh1Changed(float& val);
     void thresh2Changed(float& val);
     void showContoursButtonPressed();
+    void simParamChanged(float& val);
+    void simParamStartRadiusChanged(float& val);
+    void simParamEndRadiusChanged(float& val);
 
 	ofxKinect depthcam;
 	ofxReprojectionCalibration calibration;
@@ -44,6 +47,11 @@ public:
     float mapRezSim;
     float mapRezImg;
 	int maskPoints;
+	int fishCount;
+	int boundaryPadding;
+	int collisionWeight;
+    int startPosx,startPosy;
+    int endPosx,endPosy;
 
 	Simulation sim;
 	Flocking* flockDisplay;
@@ -71,7 +79,7 @@ public:
 	ofParameter<float> thresh0;
 	ofParameter<float> thresh1;
 	ofParameter<float> thresh2;
-    
+
     ofxPanel simControls;
     ofxButton showContoursButton;
     ofParameter<float> maxSpeed;

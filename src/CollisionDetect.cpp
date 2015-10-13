@@ -21,7 +21,7 @@ void CollisionDetect::boidCollision(Boid &b)
     }
 }
 
-bool CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
+int CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
 {
     float x = b.loc.x/simRes;
     float y = b.loc.y/simRes;
@@ -38,6 +38,8 @@ bool CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
                 b.loc.y+=1;
             else
                 b.loc.y-=1;
+
+            return 2;
         }
         else
         {
@@ -45,12 +47,14 @@ bool CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
             b.vel = math::Vec2f(-1,-1)*(b.vel);
             // Setting to Previous frame location
             b.loc =b.prev_loc;
+
+            return 1;
         }
 
-        return true;
+
     }
     else
-        return false;
+        return 0;
 
 }
 

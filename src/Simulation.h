@@ -21,7 +21,7 @@ public:
 				int 	mfishCount 			,
 				float 	mdestWeight 		,
 				int 	mrandSeed 			,
-				float		msleepTime			,
+				float	msleepTime			,
               	int 	mboundaryPadding 	,
               	float 	mmaxSpeed 			,
               	float 	mmaxForce 			,
@@ -39,8 +39,27 @@ public:
 	bool frame();
 	void run();
     void draw();
-
+    void updateSimParams(
+                float 	mdestWeight 		,
+				int 	mrandSeed 			,
+				float	msleepTime			,
+              	int 	mboundaryPadding 	,
+              	float 	mmaxSpeed 			,
+              	float 	mmaxForce 			,
+           		float 	mflockSepWeight 	,
+           		float 	mflockAliWeight 	,
+           		float 	mflockCohWeight 	,
+           		float 	mcollisionWeight 	,
+           		float 	mflockSepRadius 	,
+           		float 	mflockAliRadius 	,
+           		float 	mflockCohRadius		,
+				float	mstartPosRad		,
+				float	mendPosRad);
 	Flocking* getFlockHandle();
+	void setDestination(int x, int y);
+	void setDestination(int x, int y,float radius);
+	void setStart(int x, int y);
+	void setStart(int x, int y,float radius);
 
 
 	Simulation()

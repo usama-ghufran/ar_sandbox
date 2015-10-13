@@ -26,7 +26,8 @@ int i;
                 boids[i].update(boids);
 
                 if(boids[i].reachedDestination)
-                    removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
+                    //removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
+                    boids[i].loc=startPos;
         }
 
 return flockSize()==0? 0: 1;
@@ -79,12 +80,35 @@ void Flocking::setDestination(int x, int y,float area)
 }
 
 
+void Flocking::setDestination(int x, int y)
+{
+    destination.setval((float)x,(float)y);
+    destinationSeek=destination;
+}
+
+
+void Flocking::setDestination(Vec2f dest)
+{
+    destination=dest;
+    destinationSeek=destination;
+}
+
 void Flocking::setDestination(Vec2f dest,float area)
 {
     destination=dest;
     destinationArea=area;
 }
 
+void Flocking::setStart(Vec2f _startPos)
+{
+    startPos=_startPos;
+}
+
+void Flocking::setStart(Vec2f _startPos,float area)
+{
+    startPos=_startPos;
+    startArea=area;
+}
 
 /*
 void Flocking::useCollisionSDF(bool val)
@@ -143,7 +167,22 @@ Vec2f** Flocking::calculatePartialDerivaties()
 
 }
 
-
+void Flocking::updateSimParams()
+{
+    int i;
+    for (i=0; i<boids.size(); i++)
+    {
+        boids[i].updateSimParams(
+                                maxSpeed 		,
+                                maxForce 		,
+                                flockSepWeight	,
+                                flockAliWeight	,
+                                flockCohWeight	,
+                                flockSepRadius	,
+                                flockAliRadius	,
+                                flockCohRadius	);
+    }
+}
 
 void Flocking::setSimulationParameters(
     		int 	mboundaryPadding 	,

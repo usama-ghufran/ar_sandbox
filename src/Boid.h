@@ -62,5 +62,16 @@ public:
 	float 	flockSepRadius;
 	float 	flockAliRadius;
 	float 	flockCohRadius;
+
+	void updateSimParams(
+        float 	mmaxSpeed 			,
+		float 	mmaxForce 			,
+		float 	mflockSepWeight 	,
+		float 	mflockAliWeight 	,
+		float 	mflockCohWeight 	,
+		float 	mflockSepRadius 	,
+		float 	mflockAliRadius 	,
+		float 	mflockCohRadius 	);
+
 };
 

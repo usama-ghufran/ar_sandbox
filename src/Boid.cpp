@@ -258,3 +258,23 @@ void Boid::draw()
 {
 
 }
+
+void Boid::updateSimParams(
+        float 	mmaxSpeed 			,
+		float 	mmaxForce 			,
+		float 	mflockSepWeight 	,
+		float 	mflockAliWeight 	,
+		float 	mflockCohWeight 	,
+		float 	mflockSepRadius 	,
+		float 	mflockAliRadius 	,
+		float 	mflockCohRadius 	)
+		{
+		    maxSpeed            = mmaxSpeed;
+            maxForce 			= mmaxForce;
+            flockSepWeight 	    = mflockSepWeight;
+            flockAliWeight 	    = mflockAliWeight;
+            flockCohWeight 	    = mflockCohWeight;
+            flockSepRadius 	    = mflockSepRadius;
+            flockAliRadius 	    = mflockAliRadius;
+            flockCohRadius      = mflockCohRadius;
+		}
