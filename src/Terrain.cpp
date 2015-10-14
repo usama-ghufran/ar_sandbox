@@ -19,8 +19,10 @@ void Terrain::loadTerrain(string filename,float mapRezImg)
 
     if(!grass.data)            grass=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
     if(!sand.data)             sand=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
-    if(!water.data)            water=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
-    if(!pebble.data)           pebble=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
+    //if(!water.data)
+                water=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
+    //if(!pebble.data)
+               pebble=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
     if(!rock_snow.data)        rock_snow=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
     if(!brick.data)        rock_snow=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
 
@@ -66,24 +68,24 @@ void Terrain::combineMapsWithMasks()
 
         cv::Vec3b* t0 = textures[0]->ptr<cv::Vec3b>(i);
         cv::Vec3b* t1 = textures[1]->ptr<cv::Vec3b>(i);
-        //cv::Vec3b* t2 = textures[2]->ptr<cv::Vec3b>(i);
-        //cv::Vec3b* t3 = textures[3]->ptr<cv::Vec3b>(i);
+        cv::Vec3b* t2 = textures[2]->ptr<cv::Vec3b>(i);
+        cv::Vec3b* t3 = textures[3]->ptr<cv::Vec3b>(i);
 
         uchar* m0 = mask[0].ptr<uchar>(i/mres);
         uchar* m1 = mask[1].ptr<uchar>(i/mres);
-        //uchar* m2 = mask[2].ptr<uchar>(i/mres);
-        //uchar* m3 = mask[3].ptr<uchar>(i/mres);
+        uchar* m2 = mask[2].ptr<uchar>(i/mres);
+        uchar* m3 = mask[3].ptr<uchar>(i/mres);
 
 
         for(int j = 0; j < composite.cols; j++)
         {
-            //if(m3[j/mres]==255)
-                //comp[j]=t3[j];
+            if(m3[j/mres]==255)
+                comp[j]=t3[j];
 
-            //else if(m2[j/mres]==255)
-                //comp[j]=t2[j];
+            else if(m2[j/mres]==255)
+                comp[j]=t2[j];
 
-            if(m1[j/mres]==255)//else if
+            else if(m1[j/mres]==255)
                 comp[j]=t1[j];
 
             else if(m0[j/mres]==255)
@@ -201,7 +203,7 @@ void Terrain::processScene()
     applyThreshold();
 
     //for(int i=0;i<3;i++)
-        //cv::GaussianBlur(mask[i],mask[i],cv::Size(11,11),0);
+        cv::GaussianBlur(mask[1],mask[1],cv::Size(5,5),0);
 
     //multMapWithMask(pebble,mask[3],composite);
     //multMapWithMask(water,mask[2],composite);

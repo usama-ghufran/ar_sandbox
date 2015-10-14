@@ -1,16 +1,16 @@
-<Simulation_Controls>
-	<Simulation_Controls/>
-	<Max_Speed>2</Max_Speed>
-	<Max_Force>1</Max_Force>
-	<Goal_Weight>0.1</Goal_Weight>
-	<Separation_Weight>1</Separation_Weight>
-	<Alignment_Weight>0.5</Alignment_Weight>
-	<Cohesion_Weight>0.25</Cohesion_Weight>
-	<Separation_Radius>15</Separation_Radius>
-	<Alignment_Radius>20</Alignment_Radius>
-	<Cohesion_Radius>20</Cohesion_Radius>
-	<Start_Radius>50</Start_Radius>
-	<End_Radius>50</End_Radius>
-	<Sim_Sleep_Time>0</Sim_Sleep_Time>
-	<Random_Seed>0</Random_Seed>
+<Simulation_Controls>
+	<Simulation_Controls/>
+	<Max_Speed>2</Max_Speed>
+	<Max_Force>1</Max_Force>
+	<Goal_Weight>0.05</Goal_Weight>
+	<Separation_Weight>0.46</Separation_Weight>
+	<Alignment_Weight>0.5</Alignment_Weight>
+	<Cohesion_Weight>0.3</Cohesion_Weight>
+	<Separation_Radius>20</Separation_Radius>
+	<Alignment_Radius>20</Alignment_Radius>
+	<Cohesion_Radius>20</Cohesion_Radius>
+	<Start_Radius>50</Start_Radius>
+	<End_Radius>50</End_Radius>
+	<Sim_Sleep_Time>0</Sim_Sleep_Time>
+	<Random_Seed>0</Random_Seed>
 </Simulation_Controls>
