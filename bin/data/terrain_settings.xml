@@ -1,7 +1,8 @@
-<Terrain_Controls>
-	<Max_Height>239</Max_Height>
-	<Min_Height>123</Min_Height>
-	<Thresh_0>0.9</Thresh_0>
-	<Thresh_1>0.775</Thresh_1>
-	<Thresh_2>0</Thresh_2>
+<Terrain_Controls>
+	<Max_Height>255</Max_Height>
+	<Min_Height>2</Min_Height>
+	<Thresh_0>0.645</Thresh_0>
+	<Thresh_1>0.59</Thresh_1>
+	<Thresh_2>0</Thresh_2>
+<Terrain_Controls/>
 </Terrain_Controls>

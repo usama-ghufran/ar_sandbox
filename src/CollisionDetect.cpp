@@ -21,11 +21,19 @@ void CollisionDetect::boidCollision(Boid &b)
     }
 }
 
-int CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos)
+int CollisionDetect::maskCollision(Boid &b,cv::Mat& mask,bool resetPos,bool invert)
 {
     float x = b.loc.x/simRes;
     float y = b.loc.y/simRes;
-    if(mask.at<uchar>(cv::Point(x,y))==0)
+
+    int compare;
+
+    if(invert)
+        compare=255;
+    else
+        compare=0;
+
+    if(mask.at<uchar>(cv::Point(x,y))==compare)
     {
         if(resetPos)
         {

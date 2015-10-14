@@ -50,13 +50,13 @@ void Terrain::setThreshold(int threshID, int threshVal)
 void Terrain::applyThreshold()
 {
     cv::threshold(*depthImage,mask[0],thresh[0],255,0);
-    for(int i=1;i<3;i++)
+    for(int i=1;i<3-1;i++)
     {
         cv::threshold(*depthImage,mask[i],thresh[i],255,3);
         cv::threshold(mask[i],mask[i],thresh[i-1],255,4);
         cv::threshold(mask[i],mask[i],0,255,0);
     }
-    cv::threshold(*depthImage,mask[3],thresh[3-1],255,1);
+    cv::threshold(*depthImage,mask[3-1],thresh[3-2],255,1);
 }
 
 void Terrain::combineMapsWithMasks()
@@ -203,7 +203,7 @@ void Terrain::processScene()
     applyThreshold();
 
     //for(int i=0;i<3;i++)
-        cv::GaussianBlur(mask[1],mask[1],cv::Size(5,5),0);
+        //cv::GaussianBlur(mask[1],mask[1],cv::Size(5,5),0);
 
     //multMapWithMask(pebble,mask[3],composite);
     //multMapWithMask(water,mask[2],composite);
@@ -229,4 +229,11 @@ cv::Mat Terrain::getTerrain()
     //composite=grass;
 
     return composite;
+}
+
+void Terrain::translateImg(cv::Mat &img,cv::Mat& dst, int offsetx, int offsety)
+{
+    cv::Mat trans_mat = (cv::Mat_<double>(2,3) << 1, 0, offsetx, 0, 1, offsety);
+    cv::warpAffine(img,dst,trans_mat,img.size());
+
 }

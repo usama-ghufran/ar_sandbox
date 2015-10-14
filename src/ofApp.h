@@ -66,6 +66,7 @@ public:
 	cv::Mat depthImage;
 	cv::Mat projectImg;
     cv::Mat projectImgRGB;
+    cv::Mat projectImgRGBMoved;
 
     cv::Point kinectMask[4];
 	cv::Point drawkinectMask[4];
@@ -96,6 +97,9 @@ public:
     ofParameter<float> sleepTime;
     ofParameter<float> randSeed;
 
+    ofxPanel imageControls;
+    ofParameter<float> offsetx;
+    ofParameter<float> offsety;
 
 	//DEBUG
 	cv::Mat* threshMask;
