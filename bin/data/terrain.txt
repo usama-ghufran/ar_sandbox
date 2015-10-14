@@ -1,5 +1,6 @@
-textures/grass.bmp
+textures/grass_low.bmp
 textures/sand.bmp
 textures/water.bmp
 textures/pebble.bmp
 textures/rocky_snow.bmp
+textures/brick.bmp

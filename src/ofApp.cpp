@@ -232,6 +232,7 @@ void ofApp::update()
     cv::Scalar green(0,255,0);
     cv::Scalar yellow(255,255,0);
     cv::Scalar blue(0,0,255);
+    cv::Scalar cyan(0,255,255);
 
     if(!calibration.isFinalized())
     {
@@ -257,7 +258,12 @@ void ofApp::update()
     else if(calibration.isFinalized() && rendererInited)
     {
         renderer.update();
-        sim.frame();
+
+        if(!sim.frame())
+        {
+            cout<<"\naAdding new boids\n";
+            sim.addAllBoids();
+        }
 
         obj.nativeContourFind(depthImage);
 
@@ -296,20 +302,20 @@ void ofApp::update()
                 //cv::circle(projectImgRGB,cv::Point(x,y),5,green,-1);
 
 
-                cv::fillConvexPoly(projectImgRGB,boidPts,3,whiteC3);
+                cv::fillConvexPoly(projectImgRGB,boidPts,3,cyan);
                 //cv::circle(flockImg,cv::Point(x,y),3,green,-1);
               // (*boids)[i].collided_with_contour=false;
             }
             else
                 //cv::circle(projectImgRGB,cv::Point(x,y),5,whiteC3,-1);
-                cv::fillConvexPoly(projectImgRGB,boidPts,3,whiteC3);
+                cv::fillConvexPoly(projectImgRGB,boidPts,3,cyan);
 
         }
 
         //Start
-        cv::circle(projectImgRGB,cv::Point((startPosx/mapRezSim)*mapRezImg,(startPosy/mapRezSim)*mapRezImg),startRadius,blue,5);
+        cv::circle(projectImgRGB,cv::Point((startPosx/mapRezSim)*mapRezImg,(startPosy/mapRezSim)*mapRezImg),(startRadius/mapRezSim)*mapRezImg,blue,1);
         //Destination
-        cv::circle(projectImgRGB,cv::Point((endPosx/mapRezSim)*mapRezImg,(endPosy/mapRezSim)*mapRezImg),endRadius,yellow,5);
+        cv::circle(projectImgRGB,cv::Point((endPosx/mapRezSim)*mapRezImg,(endPosy/mapRezSim)*mapRezImg),(endRadius/mapRezSim)*mapRezImg,yellow,1);
 
         ofxCv::toOf(projectImgRGB,projectImgOF);
         projectImgOF.update();
@@ -330,7 +336,7 @@ void ofApp::draw()
 {
     if(!calibration.isFinalized())
     {
-        calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT-50);
+        calibration.drawStatusScreen(0,0,WIN_WIDTH,WIN_HEIGHT-30);
         calibration.drawChessboard(WIN_WIDTH,0,WIN_WIDTH,WIN_HEIGHT);
 
         //Draw Mask Points;
@@ -352,11 +358,11 @@ void ofApp::draw()
         //Disable depth test after renderer call.
         ofDisableDepthTest();
 
-        projectImgOF.draw(WIN_WIDTH*0.2,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+        projectImgOF.draw(0,0,WIN_WIDTH,WIN_HEIGHT);
 
-        threshMaskOF[0].draw(WIN_WIDTH*0.7,0,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
-        threshMaskOF[1].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.3,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
-        threshMaskOF[2].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.6,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+        //threshMaskOF[0].draw(WIN_WIDTH*0.7,0,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+        //threshMaskOF[1].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.3,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
+        //threshMaskOF[2].draw(WIN_WIDTH*0.7,WIN_HEIGHT*0.6,WIN_WIDTH*0.3,WIN_HEIGHT*0.3);
 
         ofDrawBitmapString(ofToString(ofGetFrameRate())+" fps", 50, 190);
 
@@ -369,7 +375,7 @@ void ofApp::draw()
         if(showContours)
         {
             // Debug to draw contours
-            obj.nativeDrawContours(WIN_WIDTH*0.2,0,WIN_WIDTH*0.5,WIN_HEIGHT*0.5);
+            obj.nativeDrawContours(0,0,WIN_WIDTH,WIN_HEIGHT);
         }
 
 
@@ -402,7 +408,7 @@ void ofApp::keyPressed(int key)
 
 void ofApp::mousePressed(int x, int y, int button)
 {
-    cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
+    //cout<<"\nMOUSE: x y button "<<x<<" "<<y<<" "<<button;
     if(!calibration.isFinalized())
     {
 
@@ -420,14 +426,14 @@ void ofApp::mousePressed(int x, int y, int button)
     {
         if(button==0)
         {
-            startPosx=x;
-            startPosy=y;
+            startPosx=x*IMG_WIDTH*mapRezSim/WIN_WIDTH;
+            startPosy=y*IMG_HEIGHT*mapRezSim/WIN_HEIGHT;
             sim.setStart(startPosx,startPosy);
         }
         else if(button==2)
         {
-            endPosx=x;
-            endPosy=y;
+            endPosx=x*IMG_WIDTH*mapRezSim/WIN_WIDTH;
+            endPosy=y*IMG_HEIGHT*mapRezSim/WIN_HEIGHT;
             sim.setDestination(endPosx,endPosy);
         }
     }

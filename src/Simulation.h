@@ -36,7 +36,7 @@ public:
 				float	mendPosRad
 		);
 
-	bool frame();
+	int frame();
 	void run();
     void draw();
     void updateSimParams(
@@ -60,6 +60,7 @@ public:
 	void setDestination(int x, int y,float radius);
 	void setStart(int x, int y);
 	void setStart(int x, int y,float radius);
+	void addAllBoids();
 
 
 	Simulation()

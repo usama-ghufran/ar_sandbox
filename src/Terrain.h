@@ -29,6 +29,7 @@ private:
     cv::Mat grass;
     cv::Mat water;
     cv::Mat sand;
+    cv::Mat brick;
     cv::Mat rock_snow;
     cv::Mat pebble;
     cv::Mat composite;

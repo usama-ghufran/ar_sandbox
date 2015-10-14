@@ -26,11 +26,12 @@ int i;
                 boids[i].update(boids);
 
                 if(boids[i].reachedDestination)
-                    //removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
-                    boids[i].loc=startPos;
+                    removeBoid(boids[i].loc.x,boids[i].loc.y,1);  //ineffcient way to remove boids
+                    //boids[i].loc=startPos;
         }
 
-return flockSize()==0? 0: 1;
+//return flockSize()==0? 0: 1;
+return flockSize();
 }
 
 

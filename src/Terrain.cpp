@@ -13,6 +13,7 @@ void Terrain::loadTerrain(string filename,float mapRezImg)
     water = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
     pebble = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
     rock_snow = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
+    brick = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
 
     composite=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
 
@@ -21,12 +22,14 @@ void Terrain::loadTerrain(string filename,float mapRezImg)
     if(!water.data)            water=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
     if(!pebble.data)           pebble=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
     if(!rock_snow.data)        rock_snow=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
+    if(!brick.data)        rock_snow=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
 
     for(int i=0;i<=3;i++)
         mask[i]=cv::Mat(480,640,CV_8UC1,cv::Scalar(0));
 
-    textures[0]=&rock_snow;
-    textures[1]=&grass;
+    //textures[0]=&rock_snow;
+    textures[0]=&grass;
+    textures[1]=&brick;
     textures[2]=&water;
     textures[3]=&pebble;
 }
@@ -63,24 +66,24 @@ void Terrain::combineMapsWithMasks()
 
         cv::Vec3b* t0 = textures[0]->ptr<cv::Vec3b>(i);
         cv::Vec3b* t1 = textures[1]->ptr<cv::Vec3b>(i);
-        cv::Vec3b* t2 = textures[2]->ptr<cv::Vec3b>(i);
-        cv::Vec3b* t3 = textures[3]->ptr<cv::Vec3b>(i);
+        //cv::Vec3b* t2 = textures[2]->ptr<cv::Vec3b>(i);
+        //cv::Vec3b* t3 = textures[3]->ptr<cv::Vec3b>(i);
 
         uchar* m0 = mask[0].ptr<uchar>(i/mres);
         uchar* m1 = mask[1].ptr<uchar>(i/mres);
-        uchar* m2 = mask[2].ptr<uchar>(i/mres);
-        uchar* m3 = mask[3].ptr<uchar>(i/mres);
+        //uchar* m2 = mask[2].ptr<uchar>(i/mres);
+        //uchar* m3 = mask[3].ptr<uchar>(i/mres);
 
 
         for(int j = 0; j < composite.cols; j++)
         {
-            if(m3[j/mres]==255)
-                comp[j]=t3[j];
+            //if(m3[j/mres]==255)
+                //comp[j]=t3[j];
 
-            else if(m2[j/mres]==255)
-                comp[j]=t2[j];
+            //else if(m2[j/mres]==255)
+                //comp[j]=t2[j];
 
-            else if(m1[j/mres]==255)
+            if(m1[j/mres]==255)//else if
                 comp[j]=t1[j];
 
             else if(m0[j/mres]==255)

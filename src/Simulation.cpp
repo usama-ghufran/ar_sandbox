@@ -12,11 +12,12 @@ void Simulation::loadScene(float startX,float startY,float endX,float endY,int _
 
 }
 
-bool Simulation::frame(){
+int Simulation::frame(){
 
 int status = flock.update();
 sleep(sleepTime);
-return status? true : false;
+
+return status;
 }
 
 
@@ -85,6 +86,11 @@ Simulation::init(
     //flock.useCollisionSDF(true);
     //flock.calculatePartialDerivaties();
 
+
+}
+
+void Simulation::addAllBoids()
+{
     int seed=randSeed;
 
 	for(int i = 0; i < fishCount; ++i)
