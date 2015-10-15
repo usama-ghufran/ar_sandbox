@@ -46,7 +46,7 @@ void ofApp::setup()
     scene.loadTerrain("terrain.txt",mapRezImg);
     //flockImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
     projectImg=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
-    //projectImgRGBMoved=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
+    projectImgRGBMoved=cv::Mat(IMG_HEIGHT*mapRezImg,IMG_WIDTH*mapRezImg,CV_8UC3,cv::Scalar(0,0,0));
 
     if(fakeKinect)
     {
@@ -91,6 +91,7 @@ void ofApp::setup()
     terrainControls.loadFromFile("terrain_settings.xml");
 
     showContoursButton.addListener(this,&ofApp::showContoursButtonPressed);
+    boidScale.addListener(this,&ofApp::boidTriangleScaleChanged);
     simControls.setup("Simulation Controls","simulation_settings.xml",10,200);
     simControls.add(showContoursButton.setup("Display Contours"));
     simControls.add(maxSpeed.set("Max Speed",2,0,10));
@@ -106,6 +107,7 @@ void ofApp::setup()
     simControls.add(endRadius.set("End Radius",50,0,200));
     simControls.add(sleepTime.set("Sim Sleep Time",0,0,0.1));
     simControls.add(randSeed.set("Random Seed",0,0,1));
+    simControls.add(boidScale.set("Boid Scale",2,0,4));
     simControls.loadFromFile("simulation_settings.xml");
 
 
@@ -155,14 +157,8 @@ void ofApp::setup()
         }
     }
 
-    int scale=2;
 
-    trianglePts[0] = cv::Point(scale*2.5-scale*0.5,0);
-    trianglePts[1] = cv::Point(-scale-scale*0.5,-scale);
-    trianglePts[2] = cv::Point(-scale-scale*0.5,scale);
-
-
-    imageControls.setup("Image Controls","simulation_settings.xml",10,500);
+    imageControls.setup("Image Controls","simulation_settings.xml",10,600);
     imageControls.add(offsetx.set("Offset X",0,-100,100));
     imageControls.add(offsety.set("Offset Y",0,-100,100));
 
@@ -222,6 +218,12 @@ void ofApp::simParamEndRadiusChanged(float& val)
 {
     sim.setDestination(endPosx,endPosy,endRadius);
 }
+void ofApp::boidTriangleScaleChanged(float& val)
+{
+    trianglePts[0] = cv::Point(val*2.5-val*0.5,0);
+    trianglePts[1] = cv::Point(-val-val*0.5,-val);
+    trianglePts[2] = cv::Point(-val-val*0.5,val);
+}
 
 void ofApp::update()
 {
@@ -267,9 +269,10 @@ void ofApp::update()
     {
         renderer.update();
 
+
         if(!sim.frame())
         {
-            cout<<"\naAdding new boids\n";
+            cout<<"\nAdding new boids\n";
             sim.addAllBoids();
         }
 
@@ -330,9 +333,9 @@ void ofApp::update()
         //Destination
         cv::circle(projectImgRGB,cv::Point((endPosx/mapRezSim)*mapRezImg,(endPosy/mapRezSim)*mapRezImg),(endRadius/mapRezSim)*mapRezImg,yellow,1);
 
-        scene.translateImg(projectImgRGB,projectImgRGBMoved,offsetx,offsety);//slow
+        scene.translateImg2(projectImgRGB,projectImgRGBMoved,offsetx,offsety);
 
-        ofxCv::toOf(projectImgRGB,projectImgOF);
+        ofxCv::toOf(projectImgRGBMoved,projectImgOF);
         projectImgOF.update();
         scene.processScene();
 
@@ -409,15 +412,21 @@ void ofApp::keyPressed(int key)
     case 'K':
         imwrite("data/fakeKinect.bmp",depthImage);
         break;
-    case 'T':
-        obj.thresholdVal+=1;
-        break;
-    case 't':
-        obj.thresholdVal-=1;
-        break;
+
     case 'h':
         guiHide=!guiHide;
         break;
+    case 'a':
+        cout<<"\nAdding new boids\n";
+        sim.addAllBoids();
+        break;
+
+    case 'r':
+        cout<<"\nRemove all boids\n";
+        sim.removeAllBoids();
+
+        break;
+
 
     }
 }

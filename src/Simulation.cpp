@@ -197,3 +197,8 @@ void Simulation::draw()
 {
     flock.draw();
 }
+
+void Simulation::removeAllBoids()
+{
+    flock.removeAllBoids();
+}

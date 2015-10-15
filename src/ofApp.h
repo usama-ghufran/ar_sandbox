@@ -32,6 +32,7 @@ public:
     void simParamChanged(float& val);
     void simParamStartRadiusChanged(float& val);
     void simParamEndRadiusChanged(float& val);
+    void boidTriangleScaleChanged(float& val);
 
 	ofxKinect depthcam;
 	ofxReprojectionCalibration calibration;
@@ -96,6 +97,7 @@ public:
 	ofParameter<float> endRadius;
     ofParameter<float> sleepTime;
     ofParameter<float> randSeed;
+    ofParameter<float> boidScale;
 
     ofxPanel imageControls;
     ofParameter<float> offsetx;

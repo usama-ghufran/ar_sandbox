@@ -60,6 +60,17 @@ void Flocking::removeBoid(int x, int y, int radius)
     }
 }
 
+void Flocking::removeAllBoids()
+{
+    int i;
+    for (i=0; i<boids.size(); i++)
+    {
+
+            boids.erase(boids.begin()+i);
+
+    }
+}
+
 int Flocking::flockSize()
 {
     return boids.size();

@@ -23,7 +23,8 @@ public:
     cv::Mat getTerrain();
     void combineMapsWithMasks();
     void combineMapsWithMasks2();
-    void translateImg(cv::Mat &img,cv::Mat& dst, int offsetx, int offsety);
+    void translateImg(cv::Mat &src,cv::Mat& dst, int offsetx, int offsety);
+    void translateImg2(cv::Mat &src,cv::Mat& dst, int offsetx, int offsety);
 
 private:
     cv::Mat* depthImage;

@@ -61,6 +61,7 @@ public:
 	void setStart(int x, int y);
 	void setStart(int x, int y,float radius);
 	void addAllBoids();
+	void removeAllBoids();
 
 
 	Simulation()

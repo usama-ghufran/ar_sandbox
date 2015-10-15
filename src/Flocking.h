@@ -20,6 +20,7 @@ public:
     void useCollisionSDF(bool val);
     vector<Boid>* getBoidsHandle();
     Vec2f** calculatePartialDerivaties();
+    void removeAllBoids();
     void draw();
 
     void updateSimParams();

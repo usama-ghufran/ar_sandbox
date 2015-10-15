@@ -14,7 +14,6 @@ void Terrain::loadTerrain(string filename,float mapRezImg)
     pebble = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
     rock_snow = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
     brick = cv::imread(ofToDataPath(terrainFile.getNextLine()),CV_LOAD_IMAGE_COLOR);
-
     composite=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
 
     if(!grass.data)            grass=cv::Mat(480*mapRez,640*mapRez,CV_8UC3,cv::Scalar(0,0,0));
@@ -231,9 +230,33 @@ cv::Mat Terrain::getTerrain()
     return composite;
 }
 
-void Terrain::translateImg(cv::Mat &img,cv::Mat& dst, int offsetx, int offsety)
+void Terrain::translateImg(cv::Mat &src,cv::Mat& dst, int offsetx, int offsety)
 {
     cv::Mat trans_mat = (cv::Mat_<double>(2,3) << 1, 0, offsetx, 0, 1, offsety);
-    cv::warpAffine(img,dst,trans_mat,img.size());
+    cv::warpAffine(src,dst,trans_mat,src.size());
+}
 
+void Terrain::translateImg2(cv::Mat &src,cv::Mat& dst, int offsetx, int offsety)
+{
+    for(int i = 0; i < dst.rows; i++)
+    {
+        cv::Vec3b* moved = dst.ptr<cv::Vec3b>(i);
+
+        int offY = i+offsety;
+        if(offY>=0&&offY<dst.rows)
+            {
+                cv::Vec3b* img = src.ptr<cv::Vec3b>(offY);
+
+                for(int j = 0; j < dst.cols; j++)
+                {
+                    int offX = j+offsetx;
+
+                    if(offX>=0&&offX<dst.cols)
+                        moved[j]=img[offX];
+
+                }
+
+            }
+
+    }
 }
