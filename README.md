@@ -1,5 +1,5 @@
 # ar-sandbox
-An Interactive Augmented Reality Sandbox For Kids
+An Interactive Augmented Reality Fish Pond For Kids
 
 
 #Requirements
