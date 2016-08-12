@@ -19,5 +19,4 @@ They need to be put in the openframworks/addons folder
 
 #Contributors 
 Usama
-Indraneel
 Harsha
